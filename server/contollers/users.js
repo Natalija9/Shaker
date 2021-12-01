@@ -33,7 +33,7 @@ const getUserByUsername = async (req, res, next) => {
 
 
 const addNewUser = async (req, res, next) => {
-  const { username, password, age } = req.body;
+  const { username, password, age, favourites } = req.body;
 
   try {
     if (
@@ -56,7 +56,8 @@ const addNewUser = async (req, res, next) => {
     const newUser = await usersService.addNewUser(
       username,
       password,
-      age
+      age,
+      favourites
     );
     res.status(201).json(newUser);
   } catch (error) {
@@ -123,10 +124,34 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+
+const getFavourites = async(req, res, next) => {
+  const username = req.params.username;
+
+  try {
+    if (username == undefined) {
+      const error = new Error('Username missing');
+      error.status = 400;
+      throw error;
+    }
+
+    const user = await usersService.getFavourites(username);
+    if (user == null) {
+      res.status(404).json();
+    } else {
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 module.exports = {
   getUserByUsername,
   getAllUsers,
   addNewUser,
   changeUserPassword,
   deleteUser,
+  getFavourites,
 };

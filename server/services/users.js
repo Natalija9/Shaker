@@ -19,14 +19,15 @@ const getUserByUsername = async (username) => {
 const addNewUser = async (
   username,
   password,
-  age
+  age,
+  favourites
 ) => {
   const newUser = new User({
     _id: new mongoose.Types.ObjectId(),
     username,
     password,
     age,
-    favourites : [],
+    favourites,
   });
 
   await newUser.save();
@@ -47,6 +48,11 @@ const deleteUser = async (username) => {
   await User.findOneAndDelete({ username: username }).exec();
 };
 
+const getFavourites = async (username) => {
+  const user = await User.findOne({ username: username }).exec();
+  return user.favourites;
+}
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -54,4 +60,5 @@ module.exports = {
   addNewUser,
   changeUserPassword,
   deleteUser,
+  getFavourites,
 };

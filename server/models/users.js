@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Number,
         required: true
     },
-    favourites: []
+    favourites: [mongoose.Schema.Types.String]
 });
 
 const User = mongoose.model('User', userSchema);
