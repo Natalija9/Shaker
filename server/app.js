@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 const databaseString =
-  process.env.DB_STING || 'mongodb://localhost:27017/users';
+  process.env.DB_STING || 'mongodb://localhost:27017/ShakerDB';
 
 mongoose.connect(databaseString, {
   useNewUrlParser: true,
