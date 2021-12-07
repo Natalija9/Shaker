@@ -49,7 +49,7 @@ const searchCocktailsByFirstLetter = async (req,res,next) =>{
 
    const options = {
        method:'GET',
-       url:'http://www.thecocktaildb.com/api/json/v1/1/search.php?f=',
+       url:'http://www.thecocktaildb.com/api/json/v1/1/search.php',
        params:{
            "f":firstLetter
        }
