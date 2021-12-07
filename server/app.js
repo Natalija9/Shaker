@@ -28,7 +28,7 @@ app.use(urlencoded({ extended: false }));
 
 app.use('/api/users', usersRouter);
 app.use('/api/ratings', ratingsRouter);
-app.use('api/cocktails',cocktailsRouter);
+app.use('/api/cocktails',cocktailsRouter);
 
 app.use(function (req, res, next) {
   const error = new Error('Zahtev nije podrzan!');
