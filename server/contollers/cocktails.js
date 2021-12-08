@@ -17,6 +17,7 @@ const formatDrinks = (drinks) => {
             }
         }
 
+
         let newDrink = {
             "id" : drink["idDrink"],
             "name" : drink["strDrink"],
@@ -24,7 +25,7 @@ const formatDrinks = (drinks) => {
             "alcoholic" : drink["strAlcoholic"] == 'Alcoholic' ? true : false,
             "glass" : drink["strGlass"],
             "instructions" : drink["strInstructions"],
-            "ingredients" : ingredients
+            "ingredients" :  Object.fromEntries(ingredients)
 
         }
 
