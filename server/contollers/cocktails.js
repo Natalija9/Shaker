@@ -1,5 +1,40 @@
 
-const axios=require("axios").default;
+const axios = require("axios").default;
+
+const formatDrinks = (drinks) => {
+
+    let newData = [];
+    for(drink of drinks){
+    
+        let ingredients = new Map();
+
+        for(let i = 1; i < 16; i++){
+            
+            let current = drink["strIngredient" + i];
+            if(current){
+                let measure = drink["strMeasure" + i];
+                ingredients.set(current, measure);
+            }
+        }
+
+        let newDrink = {
+            "id" : drink["idDrink"],
+            "name" : drink["strDrink"],
+            "category" : drink["strCategory"],
+            "alcoholic" : drink["strAlcoholic"] == 'Alcoholic' ? true : false,
+            "glass" : drink["strGlass"],
+            "instructions" : drink["strInstructions"],
+            "ingredients" : ingredients
+
+        }
+
+        newData.push(newDrink);
+
+    }
+
+    return newData
+}
+
 
 const searchCocktailsByName = async (req,res,next) => {
     const name =req.params.cocktailName;
@@ -25,9 +60,9 @@ const searchCocktailsByName = async (req,res,next) => {
     };
     
     axios.request(options).then(function(response){
-        // console.log(res);
-        res.status(200).json(response.data);
-        //console.log(response.headers);
+        let newData = formatDrinks(response.data["drinks"])
+
+        res.status(200).json(newData);
     }).catch(function(error){
         next(error);
         console.error(error);
@@ -55,8 +90,8 @@ const searchCocktailsByFirstLetter = async (req,res,next) =>{
        }
    };
    axios.request(options).then(function(response){
-    res.status(200).json(response.data);
-    //console.log(response.headers);
+    let newData = formatDrinks(response.data["drinks"])
+    res.status(200).json(newData);
     }).catch(function(error){
     next(error);
     console.error(error);
@@ -115,7 +150,8 @@ const searchIngredientByName = async (req,res,next) =>{
     }
 
     axios.request(options).then(function(response){
-        res.status(200).json(response.data);
+        let newData = formatDrinks(response.data["drinks"])
+        res.status(200).json(newData);
     }).catch(function(error){
         next(error);
         console.error(error);
@@ -174,7 +210,8 @@ const searchIngredientByName = async (req,res,next) =>{
     }
 
     axios.request(options).then(function(response){
-        res.status(200).json(response.data);
+        let newData = formatDrinks(response.data["drinks"])
+        res.status(200).json(newData);
     }).catch(function(error){
         next(error);
         console.error(error);
@@ -205,7 +242,8 @@ const searchIngredientByName = async (req,res,next) =>{
     }
 
     axios.request(options).then(function(response){
-        res.status(200).json(response.data);
+        let newData = formatDrinks(response.data["drinks"])
+        res.status(200).json(newData);
     }).catch(function(error){
         next(error);
         console.error(error);
@@ -234,7 +272,8 @@ const searchIngredientByName = async (req,res,next) =>{
     }
 
     axios.request(options).then(function(response){
-        res.status(200).json(response.data);
+        let newData = formatDrinks(response.data["drinks"])
+        res.status(200).json(newData);
     }).catch(function(error){
         next(error);
         console.error(error);
@@ -264,7 +303,8 @@ const searchIngredientByName = async (req,res,next) =>{
     }
 
     axios.request(options).then(function(response){
-        res.status(200).json(response.data);
+        let newData = formatDrinks(response.data["drinks"])
+        res.status(200).json(newData);
     }).catch(function(error){
         next(error);
         console.error(error);
