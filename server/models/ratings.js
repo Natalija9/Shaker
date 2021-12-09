@@ -13,8 +13,8 @@ const ratingSchema = new mongoose.Schema({
     sum_of_ratings: {
         type: mongoose.Schema.Types.Number,
         required: true
-    }
-    
+    },
+    users: [mongoose.Schema.Types.String]
 });
 
 const Rating = mongoose.model('Rating', ratingSchema);

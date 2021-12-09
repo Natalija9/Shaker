@@ -2,21 +2,25 @@
     {
         "cocktail_id"  : 1000,
         "number_of_ratings" : 3,
-        "sum_of_ratings" : 13
+        "sum_of_ratings" : 13,
+        "users" : ["jovana", "lucija", "natalija"]
     },
     {
         "cocktail_id"  : 1001,
         "number_of_ratings" : 2,
-        "sum_of_ratings" : 6
+        "sum_of_ratings" : 6,
+        "users" : ["lucija", "jovana"]
     },
     {
         "cocktail_id"  : 1002,
         "number_of_ratings" : 5,
-        "sum_of_ratings" : 25
+        "sum_of_ratings" : 25,
+        "users" : ["jovana", "lucija", "natalija", "misko", "daca"]
     },
     {
         "cocktail_id"  : 1003,
         "number_of_ratings" : 4,
-        "sum_of_ratings" : 8
+        "sum_of_ratings" : 8,
+        "users" : ["natalija", "misko", "lucija", "jovana"]
     }
 ]
