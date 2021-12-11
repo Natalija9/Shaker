@@ -1,4 +1,4 @@
-<div class="ui grid" >
+<div class="ui grid" *ngIf="shouldDisplay();">
   <div class="five wide column"> </div>
   <div class="six wide column">
     <div class="ui placeholder segment">
@@ -24,7 +24,7 @@
           Still don't have an account?
         </div>
         <div class="middle aligned column">
-          <div class="ui pink basic big button">
+          <div class="ui pink basic big button" (click)="onSignUp()">
             <i class="signup icon"></i>
             Sign Up
           </div>

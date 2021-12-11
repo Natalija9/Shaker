@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Shaker';
+
+  shouldDisplayLogin: boolean = true;
+  shouldDisplaySignUp: boolean = false; 
+
+  onSignUp() {
+    this.shouldDisplaySignUp = true;
+  }
+
 }
