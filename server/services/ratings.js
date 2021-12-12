@@ -52,6 +52,8 @@ const checkUsername = async (id, username) => {
     return cocktail;
 };
 
+
+  
 module.exports = {
     listAllRatings,
     getRating,

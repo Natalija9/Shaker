@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../models/users');
 
+
 const getAllUsers = async () => {
   const users = await User.find({}).exec();
   return users;
@@ -19,15 +20,14 @@ const getUserByUsername = async (username) => {
 const addNewUser = async (
   username,
   password,
-  age,
-  favourites
+  age
 ) => {
   const newUser = new User({
     _id: new mongoose.Types.ObjectId(),
     username,
     password,
     age,
-    favourites,
+    favourites:[],
   });
 
   await newUser.save();
@@ -53,6 +53,19 @@ const getFavourites = async (username) => {
   return user.favourites;
 }
 
+const addToFavourites = async (username, id) => {
+  const newFave = await User.findOneAndUpdate(
+    {username : username},
+    {$push: {favourites: id}},
+    {new: true}
+  );
+
+  return newFave;
+};
+  
+
+
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -61,4 +74,5 @@ module.exports = {
   changeUserPassword,
   deleteUser,
   getFavourites,
+  addToFavourites,
 };

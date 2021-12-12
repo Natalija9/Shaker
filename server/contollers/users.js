@@ -33,7 +33,7 @@ const getUserByUsername = async (req, res, next) => {
 
 
 const addNewUser = async (req, res, next) => {
-  const { username, password, age, favourites } = req.body;
+  const { username, password, age } = req.body;
 
   try {
     if (
@@ -56,8 +56,7 @@ const addNewUser = async (req, res, next) => {
     const newUser = await usersService.addNewUser(
       username,
       password,
-      age,
-      favourites
+      age
     );
     res.status(201).json(newUser);
   } catch (error) {
@@ -146,6 +145,41 @@ const getFavourites = async(req, res, next) => {
   }
 };
 
+const addToFavourites = async(req, res, next) => {
+
+  const {username, id } = req.body;
+
+  try {
+    if (!username || !id ) {
+      const error = new Error('Invalid input');
+      error.status = 400;
+      throw error;
+    }
+
+    const user = await usersService.getUserByUsername(username);
+    if (!user) {
+      const error = new Error('Invalid username');
+      error.status = 404;
+      throw error;
+    }
+
+    const newFave = await usersService.addToFavourites(
+      username,
+      id
+    );
+
+    if (newFave) {
+      res.status(200).json(newFave);
+    } else {
+      const error = new Error('Invalid username or id');
+      error.status = 403;
+      throw error;
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 module.exports = {
   getUserByUsername,
@@ -154,4 +188,5 @@ module.exports = {
   changeUserPassword,
   deleteUser,
   getFavourites,
+  addToFavourites
 };

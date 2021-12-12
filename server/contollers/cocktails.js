@@ -25,6 +25,7 @@ const formatDrinks = (drinks) => {
             "alcoholic" : drink["strAlcoholic"] == 'Alcoholic' ? true : false,
             "glass" : drink["strGlass"],
             "instructions" : drink["strInstructions"],
+            "image": drink["strDrinkThumb"],
             "ingredients" :  Object.fromEntries(ingredients)
 
         }
