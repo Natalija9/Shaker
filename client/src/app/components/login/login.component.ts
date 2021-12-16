@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Globals } from '../../common/globals';
+import { User } from 'src/app/models/user.model'
+import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +10,20 @@ import { Globals } from '../../common/globals';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+
+  user: User;
+  loginForm: FormGroup;
+
+
+  constructor(private formBuilder: FormBuilder) {
+    this.user = new User('peraperic', 'pera123', 22);
+
+    this.loginForm = new FormGroup({
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
+    })
+
+   }
 
   ngOnInit(): void {
   }
@@ -18,8 +33,35 @@ export class LoginComponent implements OnInit {
     Globals.shouldDisplayLogin = false;
   }
 
-  shouldDisplay() {
-    return Globals.shouldDisplayLogin;
+  onLogin() {
+
+    const data = this.loginForm.value;
+
+    const usernameErrors: ValidationErrors | null | undefined = this.loginForm.get('username')?.errors;
+
+    if(usernameErrors !== null ){
+      window.alert('Invalid username');
+      return;
+    }
+
+    const passwordErrors: ValidationErrors | null | undefined = this.loginForm.get('password')?.errors;
+
+    if( passwordErrors !== null ){
+      window.alert('Invalid password');
+      return;
+    }
+
+
+    if(this.loginForm.invalid){
+      window.alert('Invalid input');
+      return;
+    }
+
+    Globals.shouldDisplayMainPage = true;
+    Globals.shouldDisplayLogin = false;
+    Globals.shouldDisplaySignUp = false;
   }
+
+
 
 }

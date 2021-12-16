@@ -1,40 +1,42 @@
-<div class="ui grid" *ngIf="shouldDisplay();">
+<div class="ui container" style="padding-top: 10%;">
+
+<div class="ui grid">
     <div class="five wide column"> </div>
     <div class="six wide column">
       <div class="ui placeholder segment">
         <div class="column">
-          <div class="ui form">
+          <form class="ui form" [formGroup] = "signUpForm" (ngSubmit) = "onSignUp()">
             <div class="field">
               <label style="font-size: large;">Username</label>
               <div class="ui left icon input">
-                <input type="text" placeholder="Username">
+                <input type="text" placeholder="Username" formControlName = "username">
                 <i class="user icon"></i>
               </div>
             </div>
             <div class="field">
               <label style="font-size: large;">Password</label>
               <div class="ui left icon input">
-                <input type="password" placeholder="Password">
+                <input type="password" placeholder="Password" formControlName = "password">
                 <i class="lock icon"></i>
               </div>
             </div>
             <div class="field">
                 <label style="font-size: large;">Confirm password</label>
                 <div class="ui left icon input">
-                  <input type="password" placeholder="Confirm password">
+                  <input type="password" placeholder="Confirm password" formControlName = "confirmPassword">
                   <i class="lock icon"></i>
                 </div>
             </div>
             <div class="field">
                 <label style="font-size: large;">Age</label>
                 <div class="ui left icon input">
-                  <input placeholder="Age">
+                  <input placeholder="Age" formControlName = "age">
                   <i class="glass martini icon"></i>
                 </div>
               </div>
-            
-          <div class="ui pink basic button">Sign up</div>
-          </div>
+
+          <button class="ui pink basic button" type = "submit" >Sign up</button>
+          </form>
           <div class="ui horizontal divider">
             Already have an account?
           </div>
@@ -47,6 +49,5 @@
         </div>
       </div>
     </div>
-  
+
   </div>
-  

@@ -9,6 +9,8 @@ import { DrinkInfoComponent } from './components/drink-info/drink-info.component
 import { DrinkListComponent } from './components/drink-list/drink-list.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,9 @@ import { MainPageComponent } from './components/main-page/main-page.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,8 +1,4 @@
-<!-- <div class="ui container" style="padding-top: 10%;">
-    <app-login></app-login>
-    <app-signup ></app-signup>
+    <app-login *ngIf="shouldDisplayLogin();"></app-login>
+    <app-signup *ngIf="shouldDisplaySignUp();"></app-signup>
 
-</div> -->
-
-
-<app-main-page></app-main-page>
+<app-main-page *ngIf="shouldDisplayMainPage();"></app-main-page>

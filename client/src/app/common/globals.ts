@@ -4,4 +4,6 @@ export class Globals {
 
     public static shouldDisplaySignUp: boolean = false;
 
+    public static shouldDisplayMainPage: boolean = false;
+
 }
