@@ -10,6 +10,8 @@ import { DrinkListComponent } from './components/drink-list/drink-list.component
 import { MainPageComponent } from './components/main-page/main-page.component';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FilterComponent } from './components/filter/filter.component';
+import { FavouritesComponent } from './components/favourites/favourites.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     SignupComponent,
     DrinkInfoComponent,
     DrinkListComponent,
-    MainPageComponent
+    MainPageComponent,
+    FilterComponent,
+    FavouritesComponent
   ],
   imports: [
     BrowserModule,

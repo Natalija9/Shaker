@@ -10,50 +10,27 @@ declare const $: any;
 })
 export class MainPageComponent implements OnInit {
 
-  drinksList: Cocktail[] = [
-    new Cocktail(
-      2,
-      'Margarita',
-      'cocktail',
-      true,
-      'obicna',
-      'nesto kao',
-      '',
-      ["prvi", "drugi"],
-      7
-    ),new Cocktail(
-      2,
-      'mai tai',
-      'cocktail',
-      true,
-      'spec',
-      'nesto kao',
-      '',
-      ["prvi", "nesto"],
-      0
-    ),new Cocktail(
-      2,
-      'blue lagoon',
-      'cocktail',
-      true,
-      'obicna',
-      'nesto kao',
-      '',
-      ["vodka", "drugi"],
-      2
-    ),
-  ];
-
-
   constructor() { }
 
   ngOnInit(): void {
-    $('.ui.sidebar')
+
+    $('.ui.right.sidebar.menu')
+    .sidebar({
+      context: '.bottom.right.attached.segment'
+    })
+    .sidebar('attach events', ".item.right.attached")
+    .sidebar('hide')
+    ;
+
+    $('.ui.left.sidebar.menu')
     .sidebar({
       context: '.bottom.segment'
     })
-    .sidebar('attach events', '.menu', '.item')
+    .sidebar('attach events', ".item.left.attached")
     .sidebar('hide')
     ;
+
+
   }
+
 }
