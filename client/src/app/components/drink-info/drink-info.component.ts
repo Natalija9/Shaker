@@ -12,7 +12,7 @@ export class DrinkInfoComponent implements OnInit {
   @Input() cocktail: Cocktail;
 
   constructor() {
-    this.cocktail = new Cocktail(1, "Mojito", " ", true, " ", "ovde su neke instrukcije kao", " ", [" "], 5 );
+    this.cocktail = new Cocktail(1, "Mojito", " ", true, " ", "ovde su neke instrukcije kao", " ", [" "] );
   }
 
   ngOnInit(): void {

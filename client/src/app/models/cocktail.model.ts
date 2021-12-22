@@ -8,7 +8,7 @@ export class Cocktail {
       public instructions: string,
       public image: string,
       public ingredients: string[],
-      public rating: number
+      //public rating: number
   ) {}
 
 }
