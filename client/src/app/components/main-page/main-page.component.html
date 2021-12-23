@@ -6,10 +6,10 @@
     </a>
 
 
-    <div class="ui transparent left icon input">
-        <input class="prompt" type="text" placeholder="Search cocktails and ingredients">
+    <form class="ui transparent left icon input" [formGroup]="searchForm" (keydown)="onSubmit($event)">
+        <input class="prompt" type="text" placeholder="Search cocktails and ingredients" style="color: white;" formControlName = "search">
         <i class="search icon" style="color: white;"></i>
-    </div>
+    </form>
 
     <a class="item right attached two wide column" name="favourites">
       <i class="heart icon"></i>
@@ -18,7 +18,7 @@
 
   </div>
 
-  <app-favourites></app-favourites>
+  <app-favourites [cocktails] = "cocktails | async"></app-favourites>
 
 
 </body>

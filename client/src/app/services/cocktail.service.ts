@@ -8,10 +8,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CocktailService {
 
-  constructor(private http: HttpClient) { }
+  public searchText: string;
+  constructor(private http: HttpClient) {
+    this.searchText = "mojito";
+  }
 
   getCocktails() : Observable<Cocktail[]> {
-    return this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/cocktailName/mojito");
+    return this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/cocktailName/" + this.searchText);
   }
 }
 

@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-
-declare const $: any;
+import { Cocktail } from 'src/app/models/cocktail.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-favourites',
   templateUrl: './favourites.component.html',
   styleUrls: ['./favourites.component.css']
 })
+
 export class FavouritesComponent implements OnInit {
 
-  constructor() { }
+  @Input() cocktails: Cocktail[] | null;
+
+
+  constructor() {
+
+    this.cocktails = [];
+   }
 
   ngOnInit(): void {
-
-
-
 
   }
 

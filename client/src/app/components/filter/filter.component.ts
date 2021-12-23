@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Cocktail } from 'src/app/models/cocktail.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 
 declare const $: any;
 
@@ -10,7 +12,12 @@ declare const $: any;
 })
 export class FilterComponent implements OnInit {
 
-  constructor() { }
+  @Input() cocktails: Cocktail[] | null;
+
+
+  constructor() {
+    this.cocktails = [];
+   }
 
   ngOnInit(): void {
 
