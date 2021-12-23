@@ -4,6 +4,9 @@ const axios = require("axios").default;
 const formatDrinks = (drinks) => {
 
     let newData = [];
+    if(drinks === null | drinks === undefined)
+        return [];
+
     for(drink of drinks){
     
         let ingredients = new Map();
@@ -38,8 +41,8 @@ const formatDrinks = (drinks) => {
 }
 
 
-const searchCocktailsByName = async (req,res,next) => {
-    const name =req.params.cocktailName;
+const searchCocktails = async (req,res,next) => {
+    const name =req.params.value;
     console.log(name);
 
     try{
@@ -52,23 +55,50 @@ const searchCocktailsByName = async (req,res,next) => {
         next(error);
     }
 
-    const options = {
+    const options1 = {
         method : 'GET',
         url:'http://www.thecocktaildb.com/api/json/v1/1/search.php',
         params:{
            "s" : name
         }
-
     };
-    
-    axios.request(options).then(function(response){
-        let newData = formatDrinks(response.data["drinks"])
 
-        res.status(200).json(newData);
-    }).catch(function(error){
-        next(error);
-        console.error(error);
-    })
+
+    const options2 = {
+        method:'GET',
+        url:'http://www.thecocktaildb.com/api/json/v1/1/filter.php',
+        params :{
+            "i" : name
+        }
+    }
+    
+    let data;
+
+    const req1 = axios.request(options1);
+    const req2 = axios.request(options2);
+
+    axios.all([req1, req2]).then(axios.spread(function(response1, response2){
+
+
+        data1 = formatDrinks(response1.data["drinks"]);
+        data2 = formatDrinks(response2.data["drinks"]);
+
+        if(data2 == [])
+            data = data1;
+        else if(data1 == [])
+            data = data2;
+        else
+            data = data1.concat(data2);
+            
+            res.status(200).json(data);
+        })).catch(function(error){
+            next(error);
+            console.error(error);
+        }
+
+    )
+
+
 };
 
 const searchCocktailsByFirstLetter = async (req,res,next) =>{
@@ -123,6 +153,10 @@ const searchIngredientByName = async (req,res,next) =>{
 
     axios.request(options).then(function(response){
         res.status(200).json(response.data);
+
+
+
+        
     }).catch(function(error){
         next(error);
         console.error(error);
@@ -213,6 +247,7 @@ const searchIngredientByName = async (req,res,next) =>{
 
     axios.request(options).then(function(response){
         let newData = formatDrinks(response.data["drinks"])
+
         res.status(200).json(newData);
     }).catch(function(error){
         next(error);
@@ -314,7 +349,7 @@ const searchIngredientByName = async (req,res,next) =>{
  };
 
  module.exports={
-    searchCocktailsByName,
+    searchCocktails,
     searchCocktailsByFirstLetter,
     searchIngredientByName,
     fullCocktailDetailsById,
