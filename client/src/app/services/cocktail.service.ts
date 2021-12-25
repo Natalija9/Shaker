@@ -21,9 +21,10 @@ export class CocktailService {
 
     return this.result = this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/search/" + this.searchText);
 
+  }
 
-
-
+  getRating(cocktailId: number) : Observable<number>{
+    return this.http.get<number>("http://localhost:5000/api/ratings/" + String(cocktailId));
 
   }
 }

@@ -19,7 +19,7 @@ const getRating = async (req, res, next) => {
           error.status = 400;
           throw error;
         }
-    
+        
         const cocktail = await ratingService.getRating(id);
         if (cocktail == null) {
           res.status(404).json();

@@ -1,4 +1,6 @@
+import { CocktailService } from 'src/app/services/cocktail.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Cocktail } from 'src/app/models/cocktail.model';
 
 
@@ -11,8 +13,17 @@ export class DrinkInfoComponent implements OnInit {
 
   @Input() cocktail: Cocktail;
 
-  constructor() {
-    this.cocktail = new Cocktail(1, "Mojito", " ", true, " ", "ovde su neke instrukcije kao", " ", [" "] );
+  rating: Observable<number>;
+  showDetails = false;
+
+  constructor(private cocktailService: CocktailService) {
+    this.cocktail = new Cocktail(0, "Mojito", " ", true, " ", "ovde su neke instrukcije kao", " ", [" "] );
+    this.rating = this.cocktailService.getRating(this.cocktail.id);
+  }
+
+  onClick(): void{
+    this.rating = this.cocktailService.getRating(this.cocktail.id);
+    this.showDetails = true;
   }
 
   ngOnInit(): void {

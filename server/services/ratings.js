@@ -8,6 +8,9 @@ const listAllRatings = async () => {
 
 const getRating = async (id) => {
     const cocktail = await Rating.findOne({ cocktail_id: id }).exec();
+    if(cocktail === null){
+        return 0;
+    }
     return cocktail.sum_of_ratings / cocktail.number_of_ratings;
 };
 
