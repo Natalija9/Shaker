@@ -7,31 +7,39 @@ const formatDrinks = (drinks) => {
     if(drinks === null | drinks === undefined)
         return [];
 
-    for(drink of drinks){
+        for(drink of drinks){
     
-        let ingredients = new Map();
-
-        for(let i = 1; i < 16; i++){
-            
-            let current = drink["strIngredient" + i];
-            if(current){
-                let measure = drink["strMeasure" + i];
-                ingredients.set(current, measure);
+            let ingredients = [];
+            let measures = [];
+    
+    
+            for(let i = 1; i < 16; i++){
+                
+                let current = drink["strIngredient" + i];
+                if(current !== null && current !== undefined && current !== ""){
+                    ingredients.push(current);
+                    let measure = drink["strMeasure" + i];
+                    if(measure !== null && measure !== undefined)
+                        measures.push(measure);
+                    else 
+                        measures.push("");
+                }
             }
-        }
-
-
-        let newDrink = {
-            "id" : drink["idDrink"],
-            "name" : drink["strDrink"],
-            "category" : drink["strCategory"],
-            "alcoholic" : drink["strAlcoholic"] == 'Alcoholic' ? true : false,
-            "glass" : drink["strGlass"],
-            "instructions" : drink["strInstructions"],
-            "image": drink["strDrinkThumb"],
-            "ingredients" :  Object.fromEntries(ingredients)
-
-        }
+    
+    
+            let newDrink = {
+                "id" : drink["idDrink"],
+                "name" : drink["strDrink"],
+                "category" : drink["strCategory"],
+                "alcoholic" : drink["strAlcoholic"] == 'Alcoholic' ? true : false,
+                "glass" : drink["strGlass"],
+                "instructions" : drink["strInstructions"],
+                "image": drink["strDrinkThumb"],
+                "ingredients" : ingredients,
+                "measures" : measures
+    
+            }
+    
 
         newData.push(newDrink);
 

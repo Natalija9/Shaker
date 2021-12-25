@@ -1,21 +1,38 @@
 <div class="ui divided items">
   <div class="ui item">
-    <div class="ui medium image">
+    <div class="ui small image">
       <img [src]="cocktail.image">
     </div>
-    <div class="middle aligned content">
-      <div class="header">{{ cocktail.name }}</div>
+    <div class="ui container" style="padding-left: 2%; padding-right: 18%; padding-top: 1%;">
+    <div class="content">
+      <div class="ui header">{{ cocktail.name }}</div>
+
       <div *ngIf="showDetails">
         <div class="meta">
-          <span class="price">{{ rating | async }}</span>
+          <span class="price">Rating: {{ rating | async }}</span>
         </div>
         <div class="description">
           <p>{{ cocktail.instructions}}</p>
         </div>
+        <div>
+          <ul>
+            <li *ngFor="let ingredient of cocktail.ingredients">
+              {{ ingredient }}
+            </li>
+          </ul>
+        </div>
       </div>
-      <div style="padding-top: 10%">
-        <button class="ui button" (click)="onClick()">details</button>
+
+
+      
+      <div class="extra">
+        <button class="ui right floated pink basic button" (click)="onClick()">
+          {{ buttonText }}
+          <i class="right chevron icon"></i>
+        </button>
       </div>
     </div>
+  </div>
+    
   </div>
 </div>
