@@ -194,8 +194,8 @@ const searchIngredientByName = async (req,res,next) =>{
     }
 
     axios.request(options).then(function(response){
-        let newData = formatDrinks(response.data["drinks"])
-        res.status(200).json(newData);
+        let newData = formatDrinks(response.data["drinks"]);
+        res.status(200).json(newData[0]);
     }).catch(function(error){
         next(error);
         console.error(error);

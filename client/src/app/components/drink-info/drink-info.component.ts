@@ -13,12 +13,15 @@ export class DrinkInfoComponent implements OnInit {
 
   @Input() cocktail: Cocktail;
 
+  cocktailDetails: Observable<Cocktail>;
+
   rating: Observable<number>;
   showDetails = false;
   buttonText: string;
 
   constructor(private cocktailService: CocktailService) {
     this.cocktail = new Cocktail(0, "Mojito", " ", true, " ", "ovde su neke instrukcije kao", " ", [], [] );
+    this.cocktailDetails = new Observable<Cocktail>();
     this.rating = this.cocktailService.getRating(this.cocktail.id);
     this.buttonText = "Details";
   }
@@ -26,6 +29,7 @@ export class DrinkInfoComponent implements OnInit {
   onClick(): void{
     this.rating = this.cocktailService.getRating(this.cocktail.id);
     this.showDetails = !this.showDetails;
+    this.cocktailDetails =  this.cocktailService.getDetails(this.cocktail.id);
     if(this.showDetails)
       this.buttonText = "Show less";
     else

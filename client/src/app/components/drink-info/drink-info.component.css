@@ -3,3 +3,9 @@
   font-size: large;
 }
 
+.ui.container {
+  padding-left: 2%;
+  padding-top: 1%;
+  padding-right: 10%;
+}
+

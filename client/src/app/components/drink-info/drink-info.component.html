@@ -3,7 +3,7 @@
     <div class="ui small image">
       <img [src]="cocktail.image">
     </div>
-    <div class="ui container" style="padding-left: 2%; padding-right: 18%; padding-top: 1%;">
+    <div class="ui container" style="padding-left: 2%; padding-right: 0%; padding-top: 1%;">
     <div class="content">
       <div class="ui header">{{ cocktail.name }}</div>
 
@@ -12,11 +12,11 @@
           <span class="price">Rating: {{ rating | async }}</span>
         </div>
         <div class="description">
-          <p>{{ cocktail.instructions}}</p>
+          <p>{{ (cocktailDetails | async)?.instructions}}</p>
         </div>
         <div>
           <ul>
-            <li *ngFor="let ingredient of cocktail.ingredients">
+            <li *ngFor="let ingredient of (cocktailDetails | async)?.ingredients">
               {{ ingredient }}
             </li>
           </ul>
@@ -24,7 +24,7 @@
       </div>
 
 
-      
+
       <div class="extra">
         <button class="ui right floated pink basic button" (click)="onClick()">
           {{ buttonText }}
@@ -33,6 +33,6 @@
       </div>
     </div>
   </div>
-    
+
   </div>
 </div>

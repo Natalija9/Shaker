@@ -1,4 +1,4 @@
-import { Cocktail } from './../models/cocktail.model';
+import { Cocktail } from 'src/app/models/cocktail.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -27,6 +27,13 @@ export class CocktailService {
     return this.http.get<number>("http://localhost:5000/api/ratings/" + String(cocktailId));
 
   }
+
+  getDetails(cocktailId: number) : Observable<Cocktail> {
+    return this.http.get<Cocktail>("http://localhost:5000/api/cocktails/cocktailId/" + String(cocktailId));
+  }
+
+  // router.get('/cocktailId/:cocktailId',cocktailsController.fullCocktailDetailsById);
+
 }
 
 
