@@ -1,69 +1,45 @@
+<div class="ui bottom attached segment pushable">
+  <div class="ui inverted left vertical sidebar menu" style="padding: 1%;">
 
-  <div class="ui bottom attached segment pushable">
-    <div class="ui inverted left vertical sidebar menu">
+    <form [formGroup]="filterForm" (ngSubmit)="onFilter()">
 
-
-      <a class="item">
+      <a class="item" >
         <i class="tasks icon"></i>
-        Category
-        <div class="ui form">
-          <div class="grouped fields">
-            <div class="field">
-              <div class="ui radio checkbox">
-                <input type="radio" name="rbOrdinary">
-                <label style="color: lightpink;">Ordinary drink</label>
-              </div>
-            </div>
-            <div class="field">
-              <div class="ui radio checkbox">
-                <input type="radio" name="rbShot">
-                <label style="color: lightpink;">Shot</label>
-              </div>
-            </div>
-            <div class="field">
-              <div class="ui radio checkbox">
-                <input type="radio" name="rbBeer">
-                <label style="color: lightpink;">Beer</label>
-              </div>
-            </div>
-            <div class="field">
-              <div class="ui radio checkbox">
-                <input type="radio" name="rbHomemade">
-                <label style="color: lightpink;">Homemade Liqueur</label>
-              </div>
-            </div>
-            <div class="field">
-              <div class="ui radio checkbox">
-                <input type="radio" name="rbPunch">
-                <label style="color: lightpink;">Punch</label>
-              </div>
+        <div class="fluid field">
+          <label style="font-size: large;">Category</label>
+          
+          <div class="field category" style="padding: 1%;" *ngFor = "let category of categories; let i = index" formArrayName = "categoriesForm">
+            <div class="checkbox" style="padding: 1%;">
+              <input type="checkbox" [formControlName]="i">
+              <label style="color: lightpink; font-size: small;"> {{categories[i]}} </label>
             </div>
           </div>
+
         </div>
       </a>
 
 
       <a class="item">
         <i class="beer glass icon"></i>
-        Alcoholic
         <div class="ui form">
-          <div class="grouped fields">
+          <label style="font-size: large;">Alcoholic</label>
+          <div class="grouped fields" style="padding: 1%;">
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="rbAlcoholic">
-                <label style="color: lightpink;">Alcoholic</label>
+                <input type="radio" value="alcoholic" formControlName ="alcoholic">
+                <label style="color: lightpink; font-size: small;">Alcoholic</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="rbNonAlcoholic">
-                <label style="color: lightpink;">Non alcoholic</label>
+                <input type="radio" value="nonAlcoholic" formControlName ="alcoholic">
+                <label style="color: lightpink; font-size: small;">Non alcoholic</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="rbBoth"  checked="checked">
-                <label style="color: lightpink;">Both</label>
+                <input type="radio" checked="checked" value="both" formControlName ="alcoholic">
+                <label style="color: lightpink; font-size: small;">Both</label>
               </div>
             </div>
           </div>
@@ -71,7 +47,21 @@
       </a>
 
 
-      <a class="item">
+      <a class="item" >
+        <i class="martini glass icon"></i>
+        <div class="fluid field">
+          <label style="font-size: large;">Glass</label>
+          
+          <div class="field category" style="padding: 1%;" *ngFor = "let glass of glasses; let i = index" formArrayName = "glassesForm">
+            <div class="checkbox" style="padding: 1%;">
+              <input type="checkbox" [formControlName]="i">
+              <label style="color: lightpink; font-size: small;"> {{glasses[i]}} </label>
+            </div>
+          </div>
+
+        </div>
+      </a>
+      <!-- <a class="item">
         <i class="martini glass icon"></i>
         Glass
         <div class="ui form">
@@ -96,14 +86,19 @@
             </div>
           </div>
         </div>
-      </a>
-    </div>
-    <div class="pusher">
-      <div class="ui basic segment">
+      </a> -->
 
-        <app-drink-list [cocktails] = "cocktails"></app-drink-list>
-
-      </div>
-    </div>
+      <button class="ui inverted white basic fluid button" type= "submit">
+        Filter
+      </button>
+    </form>
   </div>
+  <div class="pusher">
+    <div class="ui basic segment">
 
+      <app-drink-list [cocktails]="cocktails"></app-drink-list>
+
+    </div>
+
+  </div>
+</div>
