@@ -48,6 +48,11 @@ const formatDrinks = (drinks) => {
     return newData
 }
 
+const formatIngredient = (ingredients) => {
+
+    return ingredients[0]["strDescription"];
+}
+
 
 const searchCocktails = async (req,res,next) => {
     const name =req.params.value;
@@ -160,10 +165,8 @@ const searchIngredientByName = async (req,res,next) =>{
     }
 
     axios.request(options).then(function(response){
-        res.status(200).json(response.data);
-
-
-
+        let newData = formatIngredient(response.data["ingredients"]);
+        res.status(200).json(newData);
         
     }).catch(function(error){
         next(error);

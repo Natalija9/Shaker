@@ -60,7 +60,6 @@ export class MainPageComponent implements OnInit {
     .sidebar('hide')
     ;
 
-
   }
 
 }

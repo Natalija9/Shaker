@@ -16,10 +16,27 @@
         </div>
         <div>
           <ul>
-            <li *ngFor="let ingredient of (cocktailDetails | async)?.ingredients">
+            <li *ngFor="let ingredient of (cocktailDetails | async)?.ingredients; index as i;">
               {{ ingredient }}
+              <i class="tuny angle down icon" (click)="onIngredient(ingredient)"></i>
+              
             </li>
           </ul>
+        </div>
+        <div *ngIf="showIngredient">
+          <div class="ui two column grid">
+            <div class="three wide column">
+              <i class="tuny angle up icon" (click)="close()" style="font-size: small;">Close</i>
+              <br><br>
+              <div class="ui small image">
+                <img [src]="ingredientImg">
+              </div>
+            </div>
+            <div class="column" style="font-size: smaller;  font-style: italic;">
+              <br><br>
+              {{ ingredientDetails | async }}
+            </div>
+          </div>
         </div>
       </div>
 

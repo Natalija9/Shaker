@@ -41,6 +41,10 @@ export class CocktailService {
     return this.result = this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/glass/" + glass);
 
   }
+
+  getIngredient(name: String) : Observable<String> {
+    return this.http.get<String>("http://localhost:5000/api/cocktails/ingredientName/" + name);
+  }
 }
 
 
