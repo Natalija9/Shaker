@@ -6,10 +6,11 @@
     <div class="ui container">
     <div class="content">
       <div class="ui header">{{ cocktail.name }}</div>
+      <div class="ui star rating"></div>
 
       <div *ngIf="showDetails">
         <div class="meta">
-          <span class="price">Rating: {{ cocktail.glass }}</span>
+          <span class="price">Rating: {{ rating | async }}</span>
         </div>
         <div class="description">
           <p>{{ (cocktailDetails | async)?.instructions}}</p>
@@ -17,9 +18,9 @@
         <div>
           <ul>
             <li *ngFor="let ingredient of (cocktailDetails | async)?.ingredients; index as i;">
-              {{ ingredient }}
+              {{ (cocktailDetails | async)!.measures[i] }} {{ ingredient }}
               <i class="tuny angle down icon" (click)="onIngredient(ingredient)"></i>
-              
+
             </li>
           </ul>
         </div>

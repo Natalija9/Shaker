@@ -25,7 +25,7 @@ export class FilterComponent implements OnInit {
    "Champagne flute", "Whiskey sour glass", "Cordial glass", "Brandy snifter", "White wine glass",
    "Shot glass", "Punch bowl", "Pitcher", "Beer glass", "Martini glass", "Margarita glass", "Wine glass"];
 
-  
+
 
   get categoriesFormArray(): FormArray {
     return this.filterForm.get("categoriesForm") as FormArray;
@@ -68,7 +68,7 @@ export class FilterComponent implements OnInit {
     console.log(selectedGlasses);
 
     this.cocktails = [];
-   
+
 
     for(let i = 0; i < this.categories.length; i++){
       if(this.selectedCategories[i]){
@@ -86,7 +86,7 @@ export class FilterComponent implements OnInit {
       }
     }
 
-    
+    this.filterForm.reset();
     console.log(this.cocktails);
   }
 

@@ -58,7 +58,15 @@ export class DrinkInfoComponent implements OnInit {
       popup : $('.custom.popup'),
       on    : 'click'
     });
+
+    $('.rating')
+    .rating({
+      initialRating: 2,
+      maxRating: 5
+    })
+  ;
   }
+
 
 }
 

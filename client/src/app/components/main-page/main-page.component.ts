@@ -26,6 +26,10 @@ export class MainPageComponent implements OnInit {
     });
 
     this.cocktails = [];
+    this.service.searchText = 'orange';
+    this.service.getCocktails().subscribe(cocktails => {
+      from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
+    })
   }
 
   onSubmit(event: any){
@@ -38,6 +42,9 @@ export class MainPageComponent implements OnInit {
       this.service.getCocktails().subscribe(cocktails => {
         from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
       })
+
+    this.searchForm.reset();
+
     }
 
   }
