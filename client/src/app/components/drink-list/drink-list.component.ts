@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class DrinkListComponent implements OnInit {
 
-  @Input() cocktails: Cocktail[] | null;
+  @Input() cocktails: Cocktail[];
 
   constructor(private cocktailService: CocktailService) {
     this.cocktails = [];

@@ -32,8 +32,15 @@ export class CocktailService {
     return this.http.get<Cocktail>("http://localhost:5000/api/cocktails/cocktailId/" + String(cocktailId));
   }
 
-  // router.get('/cocktailId/:cocktailId',cocktailsController.fullCocktailDetailsById);
+  filterByCategory(category: String) : Observable<Cocktail[]> {
+    return this.result = this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/category/" + category);
 
+  }
+
+  filterByGlass(glass: String) : Observable<Cocktail[]> {
+    return this.result = this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/glass/" + glass);
+
+  }
 }
 
 

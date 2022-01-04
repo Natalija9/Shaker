@@ -4,7 +4,8 @@ import { CocktailService } from 'src/app/services/cocktail.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Cocktail } from 'src/app/models/cocktail.model';
-import { Observable } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
+import { distinct } from 'rxjs/operators';
 
 
 declare const $: any;
@@ -17,14 +18,14 @@ declare const $: any;
 export class MainPageComponent implements OnInit {
 
   searchForm: FormGroup;
-  cocktails: Observable<Cocktail[]>;
+  cocktails: Cocktail[];
 
   constructor(private formBuilder: FormBuilder, private service: CocktailService) {
     this.searchForm = new FormGroup({
       search: new FormControl('', [])
     });
 
-    this.cocktails = new Observable<Cocktail[]>();
+    this.cocktails = [];
   }
 
   onSubmit(event: any){
@@ -32,8 +33,11 @@ export class MainPageComponent implements OnInit {
       const data = this.searchForm.value;
       console.log(data.search);
 
+      this.cocktails = [];
       this.service.searchText = data.search;
-      this.cocktails = this.service.getCocktails();
+      this.service.getCocktails().subscribe(cocktails => {
+        from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
+      })
     }
 
   }

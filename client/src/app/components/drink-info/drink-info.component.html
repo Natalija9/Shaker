@@ -9,7 +9,7 @@
 
       <div *ngIf="showDetails">
         <div class="meta">
-          <span class="price">Rating: {{ rating | async }}</span>
+          <span class="price">Rating: {{ cocktail.glass }}</span>
         </div>
         <div class="description">
           <p>{{ (cocktailDetails | async)?.instructions}}</p>

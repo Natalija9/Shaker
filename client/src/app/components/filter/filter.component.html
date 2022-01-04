@@ -7,7 +7,7 @@
         <i class="tasks icon"></i>
         <div class="fluid field">
           <label style="font-size: large;">Category</label>
-          
+
           <div class="field category" style="padding: 1%;" *ngFor = "let category of categories; let i = index" formArrayName = "categoriesForm">
             <div class="checkbox" style="padding: 1%;">
               <input type="checkbox" [formControlName]="i">
@@ -51,7 +51,7 @@
         <i class="martini glass icon"></i>
         <div class="fluid field">
           <label style="font-size: large;">Glass</label>
-          
+
           <div class="field category" style="padding: 1%;" *ngFor = "let glass of glasses; let i = index" formArrayName = "glassesForm">
             <div class="checkbox" style="padding: 1%;">
               <input type="checkbox" [formControlName]="i">
@@ -61,32 +61,6 @@
 
         </div>
       </a>
-      <!-- <a class="item">
-        <i class="martini glass icon"></i>
-        Glass
-        <div class="ui form">
-          <div class="grouped fields">
-            <div class="field">
-              <div class="ui radio checkbox">
-                <input type="radio" name="rbCocktail">
-                <label style="color: lightpink;">Cocktail glass</label>
-              </div>
-            </div>
-            <div class="field">
-              <div class="ui radio checkbox">
-                <input type="radio" name="rbHighball">
-                <label style="color: lightpink;">Highball glass</label>
-              </div>
-            </div>
-            <div class="field">
-              <div class="ui radio checkbox">
-                <input type="radio" name="rbOld-fashioned">
-                <label style="color: lightpink;">Old-fashioned glass</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </a> -->
 
       <button class="ui inverted white basic fluid button" type= "submit">
         Filter
