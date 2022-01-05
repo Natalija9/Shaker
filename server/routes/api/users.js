@@ -11,7 +11,7 @@ router.get('/:username', usersController.getUserByUsername);
 
 
 
-router.post('/', usersController.addNewUser);
+router.post('/register', usersController.addNewUser);
 router.put('/', usersController.changeUserPassword);
 router.delete('/:username', usersController.deleteUser);
 router.put('/addToFavourites', usersController.addToFavourites);

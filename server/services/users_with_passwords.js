@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const User = require('../models/users');
 const bcrypt = require('bcryptjs');
+const jwtUtil = require('../utils/jwt');
+
 
 const hashPassword = async (password) => {
   const SALT_ROUNDS = 10;
@@ -27,27 +29,37 @@ const getUsersByStatus = async (status) => {
   return users;
 };
 
+async function getUserJWTByUsername(username) {
+  const user = await getUserByUsername(username);
+  if (!user) {
+    throw new Error(`User with username ${username} does not exist!`);
+  }
+  return jwtUtil.generateJWT({
+    id: user.id,
+    username: user.username,
+    password:user.password,
+    age:user.age
+  });
+}
+
+
 const addNewUser = async (
   username,
-  email,
   password,
   age,
-  programmingSkills,
-  status
+  
 ) => {
   const hashedPassword = await hashPassword(password);
   const newUser = new User({
     _id: new mongoose.Types.ObjectId(),
     username,
-    email,
     password: hashedPassword,
     age,
-    programmingSkills,
-    status,
+
   });
 
   await newUser.save();
-  return newUser;
+  return getUserJWTByUsername(username);
 };
 
 const changeUserPassword = async (username, oldPassword, newPassword) => {

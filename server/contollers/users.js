@@ -1,4 +1,4 @@
-const usersService = require('../services/users');
+const usersService = require('../services/users_with_passwords');
 const validator = require('validator');
 
 const getAllUsers = async (req, res, next) => {
@@ -33,8 +33,9 @@ const getUserByUsername = async (req, res, next) => {
 
 
 const addNewUser = async (req, res, next) => {
-  const { username, password, age } = req.body;
-
+  const username = req.body.username;
+  const password = req.body.password;
+  const age = req.body.age;
   try {
     if (
       !username ||
@@ -53,12 +54,14 @@ const addNewUser = async (req, res, next) => {
       throw error;
     }
 
-    const newUser = await usersService.addNewUser(
+    const jwt = await usersService.addNewUser(
       username,
       password,
       age
     );
-    res.status(201).json(newUser);
+   return res.status(201).json({
+     token:jwt,
+   })
   } catch (error) {
     next(error);
   }
