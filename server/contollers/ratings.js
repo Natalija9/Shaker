@@ -33,7 +33,7 @@ const getRating = async (req, res, next) => {
 
 const addNewRating = async (req, res, next) => {
     const { id, rating, username } = req.body;
-  
+
     try {
       if (
         !id ||
@@ -48,7 +48,7 @@ const addNewRating = async (req, res, next) => {
       }
   
       const cocktail = await ratingService.getCocktailById(id);
-      if(!cocktail) {   // nema ga, treba ga doati u bazu
+      if(!cocktail) {   // nema ga, treba ga dodati u bazu
         const newRating = await ratingService.addNewRating(
             id, rating, username
         );
@@ -63,9 +63,10 @@ const addNewRating = async (req, res, next) => {
           res.status(200).json(updatedCocktail);
         } 
         else {  // ne moze vise puta da se ocenjuje
-          const error = new Error('Cocktail can\'t be rated twice.');
-          error.status = 403;
-          throw error;
+          // const error = new Error('Cocktail can\'t be rated twice.');
+          // error.status = 403;
+          // throw error;
+          console.log('Cocktail can\'t be rated twice.', user, id);
         }
 
       }

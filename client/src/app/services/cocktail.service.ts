@@ -1,7 +1,7 @@
 import { Cocktail } from 'src/app/models/cocktail.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -44,6 +44,10 @@ export class CocktailService {
 
   getIngredient(name: String) : Observable<String> {
     return this.http.get<String>("http://localhost:5000/api/cocktails/ingredientName/" + name);
+  }
+
+  addNewRating(rating: number, cocktailId: number) : any{
+    return this.http.post<any>("http://localhost:5000/api/ratings", { "id": cocktailId, "rating" : rating, "username" : "b"}, {'headers': { 'content-type': 'application/json'}}).subscribe(data => { console.log(data)});
   }
 }
 
