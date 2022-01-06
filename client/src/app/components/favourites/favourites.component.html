@@ -2,23 +2,11 @@
 <div class="ui bottom right attached segment pushable" style="overflow: hidden;">
   <div class="ui inverted right vertical sidebar menu">
 
-    <a class="item">
-      <i class="heart outline icon"></i>
-      margarita
+      <a class="item"  *ngFor="let cocktail of favouriteCocktails;" (click) = "onClick(cocktail.id)">
+        <i class="heart outline icon"></i>
+        {{ cocktail.name }}
 
-    </a>
-    <a class="item">
-      <i class="heart outline icon"></i>
-      mai tai
-
-    </a>
-    <a class="item">
-      <i class="heart outline icon"></i>
-      blue lagoon
-
-    </a>
-
-
+      </a>
 
   </div>
   <app-filter [cocktails] = "cocktails"></app-filter>
