@@ -42,6 +42,10 @@ export class CocktailService {
 
   }
 
+  filterByAlcoholic(alcohol: String) : Observable<Cocktail[]>{
+    return this.result = this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/alcohol/" + alcohol);
+  }
+
   getIngredient(name: String) : Observable<String> {
     return this.http.get<String>("http://localhost:5000/api/cocktails/ingredientName/" + name);
   }

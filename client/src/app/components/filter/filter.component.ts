@@ -24,7 +24,7 @@ export class FilterComponent implements OnInit {
   glasses: String[] = ["Cocktail glass", "Highball glass", "Old-fashioned glass", "Whiskey Glass", "Collins glass",
    "Champagne flute", "Whiskey sour glass", "Cordial glass", "Brandy snifter", "White wine glass",
    "Shot glass", "Punch bowl", "Pitcher", "Beer glass", "Martini glass", "Margarita glass", "Wine glass"];
-
+  alcoholic: String[]=["Alcoholic","Non alcoholic", "Optional alcoholic"];
 
 
   get categoriesFormArray(): FormArray {
@@ -35,6 +35,7 @@ export class FilterComponent implements OnInit {
     return this.filterForm.get("glassesForm") as FormArray;
   }
 
+  
 
   constructor(private service: CocktailService) {
     this.cocktails = [];
@@ -85,7 +86,27 @@ export class FilterComponent implements OnInit {
           })
       }
     }
-
+    
+    if(data.alcoholic==="nonAlcoholic"){
+      this.service.filterByAlcoholic("Non_alcoholic").subscribe(cocktails => {
+        from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
+        })
+    }
+    else if(data.alcoholic==="alcoholic"){
+      this.service.filterByAlcoholic("Alcoholic").subscribe(cocktails => {
+        from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
+        })
+    }
+    
+    /*else{
+      this.service.filterByGlass("alcoholic").subscribe(cocktails => {
+        from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
+        })
+      this.service.filterByGlass("non_alcoholic").subscribe(cocktails => {
+        from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
+        })
+    }
+    */
     this.filterForm.reset();
     console.log(this.cocktails);
   }
