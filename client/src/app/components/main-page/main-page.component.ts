@@ -3,7 +3,7 @@ import { FavouritesComponent } from './../favourites/favourites.component';
 import { DrinkListComponent } from './../drink-list/drink-list.component';
 import { CocktailService } from 'src/app/services/cocktail.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Cocktail } from 'src/app/models/cocktail.model';
 import { Observable, from, of } from 'rxjs';
 import { distinct } from 'rxjs/operators';
@@ -49,6 +49,10 @@ export class MainPageComponent implements OnInit {
 
     }
 
+  }
+
+  showFavourite(data: Cocktail[]) {
+    this.cocktails = data;
   }
 
   logOut(): void {

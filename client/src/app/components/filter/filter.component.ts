@@ -18,8 +18,8 @@ export class FilterComponent implements OnInit {
   @Input() cocktails: Cocktail[];
 
   filterForm: FormGroup;
-  categories: String[] = ["Ordinary_Drink", "Cocktail", "Milk / Float / Shake", "Cocoa", "Shot",
-    "Coffee / Tea", "Homemade_Liqueur", "Punch / Party_Drink", "Beer", "Soft_Drink / Soda"];
+  categories: String[] = ["Ordinary_Drink", "Cocktail", "Milk Float Shake", "Cocoa", "Shot",
+    "Coffee Tea", "Homemade_Liqueur", "Punch Party_Drink", "Beer", "Soft_Drink Soda"];
   glasses: String[] = ["Cocktail glass", "Highball glass", "Old-fashioned glass", "Whiskey Glass", "Collins glass",
    "Champagne flute", "Whiskey sour glass", "Cordial glass", "Brandy snifter", "White wine glass",
    "Shot glass", "Punch bowl", "Pitcher", "Beer glass", "Martini glass", "Margarita glass", "Wine glass"];

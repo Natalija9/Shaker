@@ -298,7 +298,7 @@ const searchIngredientByName = async (req,res,next) =>{
  };
 
  const filterByCategory = async (req,res,next) =>{
-    const category=req.params.category;
+    let category=req.params.category;
  
     try{
         if(category == undefined){
@@ -309,6 +309,9 @@ const searchIngredientByName = async (req,res,next) =>{
     }catch(error){
         next(error);
     }
+
+    category = category.replace(/ /g, ' / ');
+    console.log(category);
 
     const options = {
         method:'GET',

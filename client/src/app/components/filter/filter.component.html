@@ -11,7 +11,7 @@
           <div class="field category" style="padding: 1%;" *ngFor = "let category of categories; let i = index" formArrayName = "categoriesForm">
             <div class="checkbox" style="padding: 1%;">
               <input type="checkbox" [formControlName]="i">
-              <label style="color: lightpink; font-size: small;"> {{categories[i]}} </label>
+              <label style="color: lightpink; font-size: small;"> {{categories[i].replace('_', ' ')}} </label>
             </div>
           </div>
 

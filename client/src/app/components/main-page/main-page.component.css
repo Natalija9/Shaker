@@ -1,1 +1,16 @@
+body{
+    overflow: hidden;
+}
 
+.item{
+    font-size: large;
+}
+
+.input {
+    align-self: center;
+    width: 50%;
+}
+
+.prompt {
+    font-size: x-large;
+}

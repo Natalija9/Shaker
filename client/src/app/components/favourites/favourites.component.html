@@ -1,15 +1,11 @@
-
-<div class="ui bottom right attached segment pushable" style="overflow: hidden;">
-  <div class="ui inverted right vertical sidebar menu">
-
-      <a class="item"  *ngFor="let cocktail of favouriteCocktails;" (click) = "onClick(cocktail.id)">
-        <i class="heart outline icon"></i>
-        {{ cocktail.name }}
-
-      </a>
-
+<div class="ui dropdown icon right attached item">
+  <i class="heart icon"></i>
+  &nbsp;Favourites
+  <div class="menu">
+    <a class="item"  *ngFor="let cocktail of favouriteCocktails;" (click) = "onClick(cocktail.id)">
+      <i class="pink heart outline icon"></i>
+      {{ cocktail.name }}
+    </a>
+    
   </div>
-  <app-filter [cocktails] = "cocktails"></app-filter>
-  <div class="pusher" ></div>
-  </div>
-
+</div>

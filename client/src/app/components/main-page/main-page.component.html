@@ -9,14 +9,10 @@
 
     <form class="ui transparent left icon input" [formGroup]="searchForm" (keydown)="onSubmit($event)">
         <input class="prompt" type="text" placeholder="Search cocktails and ingredients" style="color: white;" formControlName = "search">
-        <i class="search icon" style="color: white;"></i>
+        <i class="large search icon" style="color: white;"></i>
     </form>
 
-    <a class="item right attached two wide column" name="favourites">
-      <i class="heart icon"></i>
-      Favourites
-    </a>
-
+      <app-favourites (cocktailsEvent) = "showFavourite($event)"></app-favourites>    
 
     <div class="ui dropdown icon item">
       <i class="user icon"></i>
@@ -32,14 +28,10 @@
       </div>
     </div>
 
-    <!-- <a class="item two wide column" name="favourites">
-      <i class="user icon"></i>
-      korisnik11
-    </a> -->
 
   </div>
 
-  <app-favourites [cocktails] = "cocktails"></app-favourites>
+  <app-filter [cocktails] = "cocktails"></app-filter>
 
 
 </body>

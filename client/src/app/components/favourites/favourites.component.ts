@@ -1,6 +1,6 @@
 import { CocktailService } from './../../services/cocktail.service';
 import { Cocktail } from 'src/app/models/cocktail.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 declare const $: any;
 
@@ -12,7 +12,8 @@ declare const $: any;
 
 export class FavouritesComponent implements OnInit {
 
-  @Input() cocktails: Cocktail[];
+  @Output() cocktailsEvent: EventEmitter<Cocktail[]> = new EventEmitter<Cocktail[]>();
+  cocktails: Cocktail[];
   favouriteCocktails: Cocktail[];
 
 
@@ -24,15 +25,16 @@ export class FavouritesComponent implements OnInit {
 
    onClick(cocktailId: number): void {
 
-    $('.ui.right.sidebar.menu').sidebar('hide');
+   // $('.ui.right.sidebar.menu').sidebar('hide');
 
     this.cocktails = [];
     this.cocktailService.getDetails(cocktailId).subscribe(x => this.cocktails.push(x));
     this.cocktailService.titleText = "One of your favourites";
+    this.cocktailsEvent.emit(this.cocktails);
    }
 
   ngOnInit(): void {
-
+    $('.dropdown').dropdown();
   }
 
 }
