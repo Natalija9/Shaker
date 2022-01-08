@@ -13,6 +13,8 @@ export class CocktailService {
   result: Observable<Cocktail[]>;
   favouriteCocktails: Cocktail[];
 
+  titleText: string = "Recommended cocktails";
+
 
   constructor(private http: HttpClient) {
     this.searchText = "mojito";
@@ -52,10 +54,13 @@ export class CocktailService {
     return this.http.get<String>("http://localhost:5000/api/cocktails/ingredientName/" + name);
   }
 
-  addNewRating(rating: number, cocktailId: number) : any{
-    return this.http.post<any>("http://localhost:5000/api/ratings", { "id": cocktailId, "rating" : rating, "username" : "b"}, {'headers': { 'content-type': 'application/json'}}).subscribe(data => { console.log(data)});
+  addNewRating(rating: number, cocktailId: number) : Observable<number>{
+    return this.http.post<number>("http://localhost:5000/api/ratings", { "id": cocktailId, "rating" : rating, "username" : "b"}, {'headers': { 'content-type': 'application/json'}});
   }
 
+  getRandomCocktail() : Observable<Cocktail[]> {
+    return this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/random");
+  }
 }
 
 

@@ -11,7 +11,8 @@ const getRating = async (id) => {
     if(cocktail === null){
         return 0;
     }
-    return cocktail.sum_of_ratings / cocktail.number_of_ratings;
+    const num = cocktail.sum_of_ratings / cocktail.number_of_ratings;
+    return Math.round(num * 100) / 100;
 };
 
 const getCocktailById = async (id) => {
@@ -29,7 +30,9 @@ const addNewRating = async (id, rating, username) => {
     });
 
     await newRating.save();
-    return newRating;
+    const num = newRating.sum_of_ratings / newRating.number_of_ratings;
+    return Math.round(num * 100) / 100;
+
 };
 
 const updateRating = async (id, rating, username) => {
@@ -44,9 +47,10 @@ const updateRating = async (id, rating, username) => {
         { useFindAndModify: false}    
     ); 
 
-    const newValue = await Rating.findOne({ cocktail_id: id }).exec();
-
-    return newValue;
+    const newRating = await Rating.findOne({ cocktail_id: id }).exec();
+    const num = newRating.sum_of_ratings / newRating.number_of_ratings;
+    return Math.round(num * 100) / 100;
+    
 };
 
 const checkUsername = async (id, username) => {

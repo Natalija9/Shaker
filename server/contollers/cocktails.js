@@ -56,7 +56,6 @@ const formatIngredient = (ingredients) => {
 
 const searchCocktails = async (req,res,next) => {
     const name =req.params.value;
-    console.log(name);
 
     try{
         if(name == undefined){
@@ -359,6 +358,37 @@ const searchIngredientByName = async (req,res,next) =>{
     })
  };
 
+ const randomCocktail = async (req,res,next) => {
+
+    const options = {
+        method:'GET',
+        url:'http://www.thecocktaildb.com/api/json/v1/1/random.php'
+    }
+    
+    let data = [];
+
+    const req1 = axios.request(options);
+    const req2 = axios.request(options);
+    const req3 = axios.request(options);
+
+    axios.all([req1, req2, req3]).then(axios.spread(function(response1, response2, response3){
+
+        data1 = formatDrinks(response1.data["drinks"]);
+        data2 = formatDrinks(response2.data["drinks"]);
+        data3 = formatDrinks(response3.data["drinks"]);
+        data = (data1.concat(data2)).concat(data3);
+            
+        res.status(200).json(data);
+    })).catch(function(error){
+        console.error(error);
+        next(error);
+    }
+
+    )
+};
+
+
+
  module.exports={
     searchCocktails,
     searchCocktailsByFirstLetter,
@@ -368,5 +398,6 @@ const searchIngredientByName = async (req,res,next) =>{
     searchCocktailsByIngredient,
     filterByAlcoholic,
     filterByCategory,
-    filterByGlass
+    filterByGlass,
+    randomCocktail
 };

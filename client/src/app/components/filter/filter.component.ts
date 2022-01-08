@@ -34,7 +34,7 @@ export class FilterComponent implements OnInit {
     return this.filterForm.get("glassesForm") as FormArray;
   }
 
-  
+
 
   constructor(private service: CocktailService) {
     this.cocktails = [];
@@ -84,7 +84,7 @@ export class FilterComponent implements OnInit {
           })
       }
     }
-    
+
     if(data.alcoholic==="nonAlcoholic"){
       this.service.filterByAlcoholic("Non_alcoholic").subscribe(cocktails => {
         from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
@@ -94,9 +94,10 @@ export class FilterComponent implements OnInit {
       this.service.filterByAlcoholic("Alcoholic").subscribe(cocktails => {
         from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
         })
-    }    
-  
-  
+    }
+
+
+    this.service.titleText = "Filter results";
     this.filterForm.reset({alcoholic: "both"});
   }
 

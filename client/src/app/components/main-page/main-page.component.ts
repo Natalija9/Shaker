@@ -1,3 +1,4 @@
+import { Globals } from './../../common/globals';
 import { FavouritesComponent } from './../favourites/favourites.component';
 import { DrinkListComponent } from './../drink-list/drink-list.component';
 import { CocktailService } from 'src/app/services/cocktail.service';
@@ -26,10 +27,11 @@ export class MainPageComponent implements OnInit {
     });
 
     this.cocktails = [];
-    this.service.searchText = 'orange';
-    this.service.getCocktails().subscribe(cocktails => {
+    this.service.getRandomCocktail().subscribe(cocktails => {
       from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
     })
+
+
   }
 
   onSubmit(event: any){
@@ -42,10 +44,16 @@ export class MainPageComponent implements OnInit {
         from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
       })
 
-    this.searchForm.reset();
+      this.service.titleText = "Search results"
+      this.searchForm.reset();
 
     }
 
+  }
+
+  logOut(): void {
+    Globals.shouldDisplayLogin = true;
+    Globals.shouldDisplayMainPage = false;
   }
 
   ngOnInit(): void {
@@ -55,17 +63,16 @@ export class MainPageComponent implements OnInit {
       context: '.bottom.right.attached.segment'
     })
     .sidebar('attach events', ".item.right.attached")
-    .sidebar('hide')
-    ;
+    .sidebar('hide');
 
     $('.ui.left.sidebar.menu')
     .sidebar({
       context: '.bottom.segment'
     })
     .sidebar('attach events', ".item.left.attached")
-    .sidebar('hide')
-    ;
+    .sidebar('hide');
 
+    $('.dropdown').dropdown();
   }
 
 }

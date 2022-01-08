@@ -56,10 +56,9 @@ export class DrinkInfoComponent implements OnInit {
 
   onStarsClicked(): void{
     if(this.rated && DrinkInfoComponent.stars !== 0){
-      this.cocktailService.addNewRating(DrinkInfoComponent.stars, this.cocktail.id);
-      this.rated = false;
+      this.rating = this.cocktailService.addNewRating(DrinkInfoComponent.stars, this.cocktail.id);
+      // this.rated = false;
       DrinkInfoComponent.stars = 0;
-      this.cocktailService.getRating(this.cocktail.id);
     }
 
   }

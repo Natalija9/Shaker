@@ -12,7 +12,7 @@ export class DrinkListComponent implements OnInit {
 
   @Input() cocktails: Cocktail[];
 
-  constructor(private cocktailService: CocktailService) {
+  constructor(public cocktailService: CocktailService) {
     this.cocktails = [];
    }
 

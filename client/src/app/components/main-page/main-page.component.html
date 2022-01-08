@@ -17,6 +17,26 @@
       Favourites
     </a>
 
+
+    <div class="ui dropdown icon item">
+      <i class="user icon"></i>
+      <div class="menu">
+        <div class="header">
+          korisnik11
+        </div>
+        <div class="divider"></div>
+        <div class="item" (click)="logOut()">
+          Log out
+          <i class="sign-out icon"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- <a class="item two wide column" name="favourites">
+      <i class="user icon"></i>
+      korisnik11
+    </a> -->
+
   </div>
 
   <app-favourites [cocktails] = "cocktails"></app-favourites>

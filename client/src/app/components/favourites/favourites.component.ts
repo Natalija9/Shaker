@@ -28,6 +28,7 @@ export class FavouritesComponent implements OnInit {
 
     this.cocktails = [];
     this.cocktailService.getDetails(cocktailId).subscribe(x => this.cocktails.push(x));
+    this.cocktailService.titleText = "One of your favourites";
    }
 
   ngOnInit(): void {
