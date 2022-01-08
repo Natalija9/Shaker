@@ -17,6 +17,9 @@ export class DrinkInfoComponent implements OnInit {
   cocktailDetails: Observable<Cocktail>;
 
   rating: Observable<number>;
+  rated: boolean = false;
+  public static stars: number = 0;
+
   showDetails = false;
   showIngredient = false;
   buttonText: string;
@@ -52,6 +55,18 @@ export class DrinkInfoComponent implements OnInit {
     this.showIngredient = false;
   }
 
+  proba(){
+    if(this.rated && DrinkInfoComponent.stars !== 0){
+      console.log(this.cocktail.id);
+      console.log(DrinkInfoComponent.stars);
+      this.cocktailService.addNewRating(DrinkInfoComponent.stars, this.cocktail.id);
+      this.rated = false;
+      DrinkInfoComponent.stars = 0;
+      this.cocktailService.getRating(this.cocktail.id);
+    }
+
+  }
+
   ngOnInit(): void {
     $('.ui.icon.button')
     .popup({
@@ -59,12 +74,20 @@ export class DrinkInfoComponent implements OnInit {
       on    : 'click'
     });
 
-    $('.rating')
+    this.rating = this.cocktailService.getRating(this.cocktail.id);
+    $('.ui.star.rating')
     .rating({
-      initialRating: 2,
-      maxRating: 5
+      initialRating: 0,
+      maxRating: 5,
+      onRate: function(value: number){
+        console.log(value);
+        $('.rating:hover').rating('disable');
+        console.log(this);
+        DrinkInfoComponent.stars = value;
+       },
     })
   ;
+
   }
 
 

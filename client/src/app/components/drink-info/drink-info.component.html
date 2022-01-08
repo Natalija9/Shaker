@@ -6,12 +6,12 @@
     <div class="ui container">
     <div class="content">
       <div class="ui header">{{ cocktail.name }}</div>
-      <div class="ui star rating"></div>
+      <div class="meta">
+        <div class="ui star rating" (click)="rated = true" (mouseleave)="proba()"></div>
+        <span class="price">{{ rating | async }} / 5</span>
+      </div>
 
       <div *ngIf="showDetails">
-        <div class="meta">
-          <span class="price">Rating: {{ rating | async }}</span>
-        </div>
         <div class="description">
           <p>{{ (cocktailDetails | async)?.instructions}}</p>
         </div>
