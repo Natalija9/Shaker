@@ -3,14 +3,35 @@
   font-size: large;
 }
 
+.ui.header {
+  font-size: x-large;
+}
+
 .ui.container {
   padding-left: 2%;
   padding-top: 1%;
   padding-right: 15%;
 }
 
-.heart.icon:hover{
+.heart.icon:hover {
   color: hotpink;
 }
 
 
+#ingredient {
+  font-size: medium;
+  font-style: italic;
+}
+
+.right.floated.column {
+  font-size: large;
+  font-style: normal;
+}
+
+.pink.button {
+  font-size: medium;
+}
+
+.angle.up.icon {
+  font-size: medium;
+}

@@ -1,17 +1,16 @@
 <div class="ui bottom attached segment pushable">
-  <div class="ui inverted left vertical sidebar menu" style="padding: 1%;">
+  <div class="ui inverted left vertical sidebar menu">
 
     <form [formGroup]="filterForm" (ngSubmit)="onFilter()">
 
       <a class="item" >
         <i class="tasks icon"></i>
         <div class="fluid field">
-          <label style="font-size: large;">Category</label>
-
-          <div class="field category" style="padding: 1%;" *ngFor = "let category of categories; let i = index" formArrayName = "categoriesForm">
-            <div class="checkbox" style="padding: 1%;">
+          <label class="mainLabel">Category</label>
+          <div class="field category" *ngFor = "let category of categories; let i = index" formArrayName = "categoriesForm">
+            <div class="checkbox">
               <input type="checkbox" [formControlName]="i">
-              <label style="color: lightpink; font-size: small;"> {{categories[i].replace('_', ' ')}} </label>
+              <label class="checkItem"> {{categories[i].replace('_', ' ')}} </label>
             </div>
           </div>
 
@@ -22,9 +21,9 @@
       <a class="item">
         <i class="beer glass icon"></i>
         <div class="ui form">
-          <label style="font-size: large;">Alcoholic</label>
-          <div class="grouped fields" style="padding: 1%;">
-            <div class="field">
+          <label class="mainLabel">Alcoholic</label>
+          <div class="grouped fields">
+            <div class="fluid field">
               <div class="ui radio checkbox">
                 <input type="radio" value="alcoholic" formControlName ="alcoholic">
                 <label style="color: lightpink; font-size: small;">Alcoholic</label>
@@ -50,12 +49,11 @@
       <a class="item" >
         <i class="martini glass icon"></i>
         <div class="fluid field">
-          <label style="font-size: large;">Glass</label>
-
-          <div class="field category" style="padding: 1%;" *ngFor = "let glass of glasses; let i = index" formArrayName = "glassesForm">
-            <div class="checkbox" style="padding: 1%;">
+          <label class="mainLabel">Glass</label>
+          <div class="field category" *ngFor = "let glass of glasses; let i = index" formArrayName = "glassesForm">
+            <div class="checkbox">
               <input type="checkbox" [formControlName]="i">
-              <label style="color: lightpink; font-size: small;"> {{glasses[i]}} </label>
+              <label  class="checkItem"> {{glasses[i]}} </label>
             </div>
           </div>
 

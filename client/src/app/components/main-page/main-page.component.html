@@ -8,11 +8,11 @@
 
 
     <form class="ui transparent left icon input" [formGroup]="searchForm" (keydown)="onSubmit($event)">
-        <input class="prompt" type="text" placeholder="Search cocktails and ingredients" style="color: white;" formControlName = "search">
-        <i class="large search icon" style="color: white;"></i>
+        <input class="prompt" type="text" placeholder="Search cocktails and ingredients" formControlName = "search">
+        <i class="large inverted search icon"></i>
     </form>
 
-      <app-favourites (cocktailsEvent) = "showFavourite($event)"></app-favourites>    
+      <app-favourites (cocktailsEvent) = "showFavourite($event)"></app-favourites>
 
     <div class="ui dropdown icon item">
       <i class="user icon"></i>

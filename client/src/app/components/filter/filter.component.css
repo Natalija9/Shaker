@@ -1,4 +1,26 @@
-.segment.pushable{
+.checkItem {
+  color: lightpink;
+  font-size: small;
+  padding-left: 2%;
+}
+
+.segment.pushable {
     background-color: rgb(255, 253, 255);
 }
 
+.mainLabel {
+  color: white;
+  font-size: large;
+}
+
+.menu {
+  padding: 1%;
+}
+
+.checkbox {
+  padding: 1%
+}
+
+.field.category {
+  padding: 1%
+}

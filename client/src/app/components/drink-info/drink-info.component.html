@@ -30,13 +30,13 @@
         <div *ngIf="showIngredient">
           <div class="ui two column grid">
             <div class="three wide column">
-              <i class="tuny angle up icon" (click)="close()" style="font-size: small;">Close</i>
+              <i class="tuny angle up icon" (click)="close()">&nbsp;Close</i>
               <br><br>
               <div class="ui small image">
                 <img [src]="ingredientImg">
               </div>
             </div>
-            <div class="column" style="font-size: smaller;  font-style: italic;">
+            <div class="column" id="ingredient">
               <br><br>
               {{ ingredientDetails | async }}
             </div>
@@ -51,7 +51,7 @@
           <br><br>
           <button class="ui right floated pink basic button" (click)="onDetailsClicked()">
             {{ showDetails ? "Show less" : "Details" }}
-            <i class="right chevron icon"></i>
+            <i class="{{ showDetails ? 'left chevron icon' : 'right chevron icon'}}"></i>
           </button>
         </div>
       </div>

@@ -311,7 +311,6 @@ const searchIngredientByName = async (req,res,next) =>{
     }
 
     category = category.replace(/ /g, ' / ');
-    console.log(category);
 
     const options = {
         method:'GET',
