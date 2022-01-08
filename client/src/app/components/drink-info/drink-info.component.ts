@@ -37,6 +37,7 @@ export class DrinkInfoComponent implements OnInit {
   onClick(): void{
     this.rating = this.cocktailService.getRating(this.cocktail.id);
     this.showDetails = !this.showDetails;
+    this.showIngredient = false;
     this.cocktailDetails =  this.cocktailService.getDetails(this.cocktail.id);
     if(this.showDetails)
       this.buttonText = "Show less";
@@ -89,10 +90,7 @@ export class DrinkInfoComponent implements OnInit {
   ;
 
   }
-
-
 }
-
 
 // constructor(
 //   public id: number,

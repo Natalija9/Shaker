@@ -12,18 +12,21 @@
       </div>
 
       <div *ngIf="showDetails">
-        <div class="description">
-          <p>{{ (cocktailDetails | async)?.instructions}}</p>
-        </div>
-        <div>
-          <ul>
-            <li *ngFor="let ingredient of (cocktailDetails | async)?.ingredients; index as i;">
-              {{ (cocktailDetails | async)!.measures[i] }} {{ ingredient }}
-              <i class="tuny angle down icon" (click)="onIngredient(ingredient)"></i>
+        <div *ngIf="cocktailDetails | async as details">
+          <div class="description">
+            <p>{{ details.instructions }}</p>
+          </div>
+          <div>
+            <ul>
+              <li *ngFor="let ingredient of details.ingredients; index as i;">
+                {{ details.measures[i]}} {{ ingredient }}
+                <i class="tuny angle down icon" (click)="onIngredient(ingredient)"></i>
 
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
+
         <div *ngIf="showIngredient">
           <div class="ui two column grid">
             <div class="three wide column">
@@ -40,8 +43,6 @@
           </div>
         </div>
       </div>
-
-
 
       <div class="extra">
         <button class="ui right floated pink basic button" (click)="onClick()">
