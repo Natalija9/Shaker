@@ -35,7 +35,6 @@ export class MainPageComponent implements OnInit {
   onSubmit(event: any){
     if(event.keyCode == 13) {
       const data = this.searchForm.value;
-      console.log(data.search);
 
       this.cocktails = [];
       this.service.searchText = data.search;

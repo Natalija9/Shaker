@@ -13,17 +13,13 @@ declare const $: any;
 export class FavouritesComponent implements OnInit {
 
   @Input() cocktails: Cocktail[];
-
   favouriteCocktails: Cocktail[];
+
 
   constructor(private cocktailService: CocktailService) {
 
     this.cocktails = [];
-    this.favouriteCocktails = [
-      new Cocktail(12618, 'Orangeade', '', false, '', '', '', [], []),
-      new Cocktail(11410, 'Gin Fizz', '', true, '', '', '', [], []),
-      new Cocktail(12316, 'Strawberry Daiquiri', '', true, '', '', '', [], [])
-    ];
+    this.favouriteCocktails = cocktailService.favouriteCocktails;
   }
 
    onClick(cocktailId: number): void {

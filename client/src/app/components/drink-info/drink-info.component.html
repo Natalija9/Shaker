@@ -7,7 +7,7 @@
     <div class="content">
       <div class="ui header">{{ cocktail.name }}</div>
       <div class="meta">
-        <div class="ui star rating" (click)="rated = true" (mouseleave)="proba()"></div>
+        <div class="ui star rating" (click)="rated = true" (mouseleave)="onStarsClicked()"></div>
         <span class="price">{{ rating | async }} / 5</span>
       </div>
 
@@ -45,10 +45,15 @@
       </div>
 
       <div class="extra">
-        <button class="ui right floated pink basic button" (click)="onClick()">
-          {{ buttonText }}
-          <i class="right chevron icon"></i>
-        </button>
+        <div class="ui right floated column">
+          {{ inFavourites ? "Remove from favourites" : "Add to favourites" }}
+          <i class="{{ inFavourites ? 'heart icon' : 'heart outline icon'}}"   (click)="onHeartClicked()"></i>
+          <br><br>
+          <button class="ui right floated pink basic button" (click)="onDetailsClicked()">
+            {{ showDetails ? "Show less" : "Details" }}
+            <i class="right chevron icon"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -20,7 +20,6 @@ export class FilterComponent implements OnInit {
   filterForm: FormGroup;
   categories: String[] = ["Ordinary_Drink", "Cocktail", "Milk / Float / Shake", "Cocoa", "Shot",
     "Coffee / Tea", "Homemade_Liqueur", "Punch / Party_Drink", "Beer", "Soft_Drink / Soda"];
-  selectedCategories: String[];
   glasses: String[] = ["Cocktail glass", "Highball glass", "Old-fashioned glass", "Whiskey Glass", "Collins glass",
    "Champagne flute", "Whiskey sour glass", "Cordial glass", "Brandy snifter", "White wine glass",
    "Shot glass", "Punch bowl", "Pitcher", "Beer glass", "Martini glass", "Margarita glass", "Wine glass"];
@@ -44,7 +43,6 @@ export class FilterComponent implements OnInit {
       categoriesForm: new FormArray([]),
       glassesForm: new FormArray([])
     });
-    this.selectedCategories = [];
     this.addCheckboxes();
   }
 
@@ -60,19 +58,19 @@ export class FilterComponent implements OnInit {
 
   onFilter(): void {
     const data = this.filterForm.value;
-    console.log(data.alcoholic);
+    // console.log(data.alcoholic);
 
-    this.selectedCategories = data.categoriesForm;
-    console.log(this.selectedCategories);
+    const selectedCategories = data.categoriesForm;
+    // console.log(selectedCategories);
 
     const selectedGlasses = data.glassesForm;
-    console.log(selectedGlasses);
+    // console.log(selectedGlasses);
 
     this.cocktails = [];
 
 
     for(let i = 0; i < this.categories.length; i++){
-      if(this.selectedCategories[i]){
+      if(selectedCategories[i]){
         this.service.filterByCategory(this.categories[i]).subscribe(cocktails => {
           from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
           })
@@ -96,19 +94,10 @@ export class FilterComponent implements OnInit {
       this.service.filterByAlcoholic("Alcoholic").subscribe(cocktails => {
         from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
         })
-    }
-    
-    /*else{
-      this.service.filterByGlass("alcoholic").subscribe(cocktails => {
-        from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
-        })
-      this.service.filterByGlass("non_alcoholic").subscribe(cocktails => {
-        from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
-        })
-    }
-    */
-    this.filterForm.reset();
-    console.log(this.cocktails);
+    }    
+  
+  
+    this.filterForm.reset({alcoholic: "both"});
   }
 
 }

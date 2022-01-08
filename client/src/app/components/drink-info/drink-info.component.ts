@@ -22,50 +22,57 @@ export class DrinkInfoComponent implements OnInit {
 
   showDetails = false;
   showIngredient = false;
-  buttonText: string;
   ingredientDetails: Observable<String>;
   ingredientImg: String = "";
+
+  inFavourites: boolean;
 
   constructor(private cocktailService: CocktailService) {
     this.cocktail = new Cocktail(0, "Mojito", " ", true, " ", "ovde su neke instrukcije kao", " ", [], [] );
     this.cocktailDetails = new Observable<Cocktail>();
     this.rating = this.cocktailService.getRating(this.cocktail.id);
-    this.buttonText = "Details";
     this.ingredientDetails = new Observable<String>();
+    this.inFavourites = this.cocktailService.favouriteCocktails.findIndex(x => x.id == this.cocktail.id) !== -1;
   }
 
-  onClick(): void{
+  onDetailsClicked(): void{
     this.rating = this.cocktailService.getRating(this.cocktail.id);
     this.showDetails = !this.showDetails;
     this.showIngredient = false;
     this.cocktailDetails =  this.cocktailService.getDetails(this.cocktail.id);
-    if(this.showDetails)
-      this.buttonText = "Show less";
-    else
-      this.buttonText = "Details";
+
+
   }
 
   onIngredient(ingredientName: String): void{
     this.showIngredient = true;
     this.ingredientDetails = this.cocktailService.getIngredient(ingredientName);
     this.ingredientImg = "https://www.thecocktaildb.com/images/ingredients/" + ingredientName + ".png";
-    console.log(this.ingredientImg);
   }
 
   close(): void {
     this.showIngredient = false;
   }
 
-  proba(){
+  onStarsClicked(): void{
     if(this.rated && DrinkInfoComponent.stars !== 0){
-      console.log(this.cocktail.id);
-      console.log(DrinkInfoComponent.stars);
       this.cocktailService.addNewRating(DrinkInfoComponent.stars, this.cocktail.id);
       this.rated = false;
       DrinkInfoComponent.stars = 0;
       this.cocktailService.getRating(this.cocktail.id);
     }
 
+  }
+
+  onHeartClicked(): void{
+    if(this.inFavourites){
+      const index = this.cocktailService.favouriteCocktails.findIndex(x => x.id == this.cocktail.id);
+      this.cocktailService.favouriteCocktails.splice(index, 1);
+    }
+    else
+      this.cocktailService.favouriteCocktails.push(this.cocktail);
+
+    this.inFavourites = !this.inFavourites;
   }
 
   ngOnInit(): void {
@@ -76,14 +83,15 @@ export class DrinkInfoComponent implements OnInit {
     });
 
     this.rating = this.cocktailService.getRating(this.cocktail.id);
+    this.inFavourites = this.cocktailService.favouriteCocktails.findIndex(x => x.id == this.cocktail.id) !== -1;
+
+
     $('.ui.star.rating')
     .rating({
       initialRating: 0,
       maxRating: 5,
       onRate: function(value: number){
-        console.log(value);
         $('.rating:hover').rating('disable');
-        console.log(this);
         DrinkInfoComponent.stars = value;
        },
     })
