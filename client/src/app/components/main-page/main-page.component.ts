@@ -35,15 +35,22 @@ export class MainPageComponent implements OnInit, OnDestroy {
   onSubmit(event: any){
     if(event.keyCode == 13) {
       const data = this.searchForm.value;
-
+      
       this.cocktails = [];
       this.service.searchText = data.search;
       let x = this.service.getCocktails().subscribe(cocktails => {
         this.cocktails = cocktails;
       })
       this.subs.push(x);
+      
+      this.service.titleText = "";
 
-      this.service.titleText = "Search results"
+      setTimeout(() => {
+        if(this.cocktails.length > 0)
+          this.service.titleText = "Search results";
+        else
+          this.service.titleText = "There are no results! You can search something else!";
+      }, 500);
       this.searchForm.reset();
     }
   }

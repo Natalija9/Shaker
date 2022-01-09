@@ -105,6 +105,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       }
     }
 
+    this.service.titleText = "";
+
     setTimeout(() => {
 
       if(data.alcoholic === "both" && this.categoryCocktails.length > 0){
@@ -120,10 +122,15 @@ export class FilterComponent implements OnInit, OnDestroy {
         this.alcoholicCocktails = this.alcoholicCocktails.filter((c: Cocktail) => this.glassCocktails.findIndex(x => x.id == c.id) !== -1);
       }
       this.cocktails = this.alcoholicCocktails.filter((v, i, a) => a.indexOf(v) === i);
-
+      
+      if(this.cocktails.length > 0)
+        this.service.titleText = "Filter results";
+      else
+        this.service.titleText = "There are no results! Try other filters!";
     }, 500);
+    
+    
 
-    this.service.titleText = "Filter results";
     this.filterForm.reset({alcoholic: "both"});
   }
 

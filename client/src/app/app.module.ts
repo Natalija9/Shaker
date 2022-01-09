@@ -13,7 +13,6 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FilterComponent } from './components/filter/filter.component';
 import { FavouritesComponent } from './components/favourites/favourites.component';
-import { FilterPipePipe } from './pipes/filter-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -24,8 +23,7 @@ import { FilterPipePipe } from './pipes/filter-pipe.pipe';
     DrinkListComponent,
     MainPageComponent,
     FilterComponent,
-    FavouritesComponent,
-    FilterPipePipe
+    FavouritesComponent
   ],
   imports: [
     BrowserModule,
