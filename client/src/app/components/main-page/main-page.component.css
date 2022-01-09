@@ -8,11 +8,14 @@ body{
 
 .input {
     align-self: center;
+    color: white;
     width: 50%;
+
 }
 
 .prompt {
     font-size: x-large;
     color: white;
+
 }
 

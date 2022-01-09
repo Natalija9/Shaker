@@ -7,6 +7,8 @@ import { Cocktail } from '../models/cocktail.model';
 export class FilterPipePipe implements PipeTransform {
 
   transform(cocktails: Cocktail[]): number {
+    console.log(cocktails);
+    console.log(cocktails.length);
     if(cocktails.length === 0) {
       return -1;
     }

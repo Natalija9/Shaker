@@ -28,7 +28,8 @@ export class MainPageComponent implements OnInit {
 
     this.cocktails = [];
     this.service.getRandomCocktail().subscribe(cocktails => {
-      from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
+      this.cocktails = cocktails;
+      // from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
     })
 
 
@@ -41,7 +42,8 @@ export class MainPageComponent implements OnInit {
       this.cocktails = [];
       this.service.searchText = data.search;
       this.service.getCocktails().subscribe(cocktails => {
-        from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
+        this.cocktails = cocktails;
+        // from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
       })
 
       this.service.titleText = "Search results"

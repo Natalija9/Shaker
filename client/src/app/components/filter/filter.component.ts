@@ -17,6 +17,10 @@ export class FilterComponent implements OnInit {
 
   @Input() cocktails: Cocktail[];
 
+  alcoholicCocktails: Cocktail[] = [];
+  categoryCocktails: Cocktail[] = [];
+  glassCocktails: Cocktail[] = [];
+
   filterForm: FormGroup;
   categories: String[] = ["Ordinary_Drink", "Cocktail", "Milk Float Shake", "Cocoa", "Shot",
     "Coffee Tea", "Homemade_Liqueur", "Punch Party_Drink", "Beer", "Soft_Drink Soda"];
@@ -58,44 +62,60 @@ export class FilterComponent implements OnInit {
 
   onFilter(): void {
     const data = this.filterForm.value;
-    // console.log(data.alcoholic);
-
     const selectedCategories = data.categoriesForm;
-    // console.log(selectedCategories);
-
     const selectedGlasses = data.glassesForm;
-    // console.log(selectedGlasses);
 
     this.cocktails = [];
 
+    if(data.alcoholic==="nonAlcoholic"){
+      this.service.filterByAlcoholic("Non_alcoholic").subscribe(cocktails => {
+        this.alcoholicCocktails = cocktails;
+        })
+    }
+    else if(data.alcoholic==="alcoholic"){
+      this.service.filterByAlcoholic("Alcoholic").subscribe(cocktails => {
+        this.alcoholicCocktails = cocktails;
+        })
+      this.service.filterByAlcoholic("Optional alcohol").subscribe(cocktails => {
+        this.alcoholicCocktails = this.alcoholicCocktails.concat(cocktails);
+        })
+
+    }
 
     for(let i = 0; i < this.categories.length; i++){
       if(selectedCategories[i]){
         this.service.filterByCategory(this.categories[i]).subscribe(cocktails => {
-          from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
+          this.categoryCocktails = this.categoryCocktails.concat(cocktails);
           })
-      }
+        }
     }
 
     for(let i = 0; i < this.glasses.length; i++){
       if(selectedGlasses[i]){
         this.service.filterByGlass(this.glasses[i]).subscribe(cocktails => {
-          from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
+          this.glassCocktails = this.glassCocktails.concat(cocktails);
           })
       }
     }
 
-    if(data.alcoholic==="nonAlcoholic"){
-      this.service.filterByAlcoholic("Non_alcoholic").subscribe(cocktails => {
-        from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
-        })
-    }
-    else if(data.alcoholic==="alcoholic"){
-      this.service.filterByAlcoholic("Alcoholic").subscribe(cocktails => {
-        from<any>(cocktails).pipe(distinct((c: any) => c['id']), ).subscribe(x => this.cocktails.push(x));
-        })
-    }
 
+    setTimeout(() => {
+
+      if(data.alcoholic === "both" && this.categoryCocktails.length > 0){
+        this.alcoholicCocktails = this.categoryCocktails;
+      }
+      else if(data.alcoholic === "both"){
+        this.alcoholicCocktails = this.glassCocktails;
+      }
+      else if(this.categoryCocktails.length > 0){
+        this.alcoholicCocktails = this.alcoholicCocktails.filter((c: Cocktail) => this.categoryCocktails.findIndex(x => x.id == c.id) !== -1);
+      }
+      if(this.glassCocktails.length > 0){
+        this.alcoholicCocktails = this.alcoholicCocktails.filter((c: Cocktail) => this.glassCocktails.findIndex(x => x.id == c.id) !== -1);
+      }
+      this.cocktails = this.alcoholicCocktails.filter((v, i, a) => a.indexOf(v) === i);
+
+    }, 500);
 
     this.service.titleText = "Filter results";
     this.filterForm.reset({alcoholic: "both"});

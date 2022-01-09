@@ -271,7 +271,7 @@ const searchIngredientByName = async (req,res,next) =>{
     const alcohol=req.params.alcohol;
  
     try{
-        if(alcohol == undefined || (alcohol!='Alcoholic' && alcohol!='Non_alcoholic')){
+        if(alcohol == undefined || (alcohol!='Alcoholic' && alcohol!='Non alcoholic' && alcohol != 'Optional alcohol')){
             const error=new Error('Alcoholic/Non_alcoholic or undefined');
             error.status=400;
             throw error;
@@ -287,6 +287,7 @@ const searchIngredientByName = async (req,res,next) =>{
             "a" : alcohol
         }
     }
+
 
     axios.request(options).then(function(response){
         let newData = formatDrinks(response.data["drinks"])
