@@ -24,9 +24,6 @@ export class FavouritesComponent implements OnInit {
   }
 
    onClick(cocktailId: number): void {
-
-   // $('.ui.right.sidebar.menu').sidebar('hide');
-
     this.cocktails = [];
     this.cocktailService.getDetails(cocktailId).subscribe(x => this.cocktails.push(x));
     this.cocktailService.titleText = "One of your favourites";

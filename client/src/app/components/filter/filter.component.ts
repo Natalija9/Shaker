@@ -1,9 +1,8 @@
+import { Subscription } from 'rxjs';
 import { CocktailService } from 'src/app/services/cocktail.service';
 import { Cocktail } from 'src/app/models/cocktail.model';
-import { Component, OnInit, Input } from '@angular/core';
-import { distinct } from 'rxjs/operators';
-import { from, range } from 'rxjs';
-import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors, FormArray } from '@angular/forms';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 
 declare const $: any;
 
@@ -13,7 +12,7 @@ declare const $: any;
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements OnInit, OnDestroy {
 
   @Input() cocktails: Cocktail[];
 
@@ -21,14 +20,19 @@ export class FilterComponent implements OnInit {
   categoryCocktails: Cocktail[] = [];
   glassCocktails: Cocktail[] = [];
 
-  filterForm: FormGroup;
-  categories: String[] = ["Ordinary_Drink", "Cocktail", "Milk Float Shake", "Cocoa", "Shot",
-    "Coffee Tea", "Homemade_Liqueur", "Punch Party_Drink", "Beer", "Soft_Drink Soda"];
-  glasses: String[] = ["Cocktail glass", "Highball glass", "Old-fashioned glass", "Whiskey Glass", "Collins glass",
-   "Champagne flute", "Whiskey sour glass", "Cordial glass", "Brandy snifter", "White wine glass",
-   "Shot glass", "Punch bowl", "Pitcher", "Beer glass", "Martini glass", "Margarita glass", "Wine glass"];
-  alcoholic: String[]=["Alcoholic","Non alcoholic", "Optional alcoholic"];
+  subs: Subscription[] = [];
 
+  filterForm: FormGroup;
+  categories: String[] = [
+    "Ordinary_Drink", "Cocktail", "Milk Float Shake", "Cocoa", "Shot",
+    "Coffee Tea", "Homemade_Liqueur", "Punch Party_Drink", "Beer", "Soft_Drink Soda"
+  ];
+
+  glasses: String[] = [
+    "Cocktail glass", "Highball glass", "Old-fashioned glass", "Whiskey Glass", "Collins glass",
+    "Champagne flute", "Whiskey sour glass", "Cordial glass", "Brandy snifter", "White wine glass",
+    "Shot glass", "Punch bowl", "Pitcher", "Beer glass", "Martini glass", "Margarita glass", "Wine glass"
+  ];
 
   get categoriesFormArray(): FormArray {
     return this.filterForm.get("categoriesForm") as FormArray;
@@ -37,8 +41,6 @@ export class FilterComponent implements OnInit {
   get glassesFormArray(): FormArray {
     return this.filterForm.get("glassesForm") as FormArray;
   }
-
-
 
   constructor(private service: CocktailService) {
     this.cocktails = [];
@@ -55,49 +57,53 @@ export class FilterComponent implements OnInit {
     this.glasses.forEach(() => this.glassesFormArray.push(new FormControl(false)));
   }
 
-
-  ngOnInit(): void {
-    $('.ui.radio.checkbox').checkbox();
-  }
-
   onFilter(): void {
     const data = this.filterForm.value;
     const selectedCategories = data.categoriesForm;
     const selectedGlasses = data.glassesForm;
 
     this.cocktails = [];
+    this.alcoholicCocktails = [];
+    this.categoryCocktails = [];
+    this.glassCocktails = [];
 
     if(data.alcoholic==="nonAlcoholic"){
-      this.service.filterByAlcoholic("Non_alcoholic").subscribe(cocktails => {
+      let x =this.service.filterByAlcoholic("Non alcoholic").subscribe(cocktails => {
         this.alcoholicCocktails = cocktails;
         })
+
+      this.subs.push(x)
     }
     else if(data.alcoholic==="alcoholic"){
-      this.service.filterByAlcoholic("Alcoholic").subscribe(cocktails => {
+      let x = this.service.filterByAlcoholic("Alcoholic").subscribe(cocktails => {
         this.alcoholicCocktails = cocktails;
         })
-      this.service.filterByAlcoholic("Optional alcohol").subscribe(cocktails => {
+      this.subs.push(x);
+
+      x = this.service.filterByAlcoholic("Optional alcohol").subscribe(cocktails => {
         this.alcoholicCocktails = this.alcoholicCocktails.concat(cocktails);
         })
+      this.subs.push(x);
 
     }
 
     for(let i = 0; i < this.categories.length; i++){
       if(selectedCategories[i]){
-        this.service.filterByCategory(this.categories[i]).subscribe(cocktails => {
+        let x = this.service.filterByCategory(this.categories[i]).subscribe(cocktails => {
           this.categoryCocktails = this.categoryCocktails.concat(cocktails);
           })
+        this.subs.push(x);
         }
     }
 
     for(let i = 0; i < this.glasses.length; i++){
       if(selectedGlasses[i]){
-        this.service.filterByGlass(this.glasses[i]).subscribe(cocktails => {
+        let x = this.service.filterByGlass(this.glasses[i]).subscribe(cocktails => {
           this.glassCocktails = this.glassCocktails.concat(cocktails);
           })
+        this.subs.push(x);
       }
     }
-
 
     setTimeout(() => {
 
@@ -119,6 +125,14 @@ export class FilterComponent implements OnInit {
 
     this.service.titleText = "Filter results";
     this.filterForm.reset({alcoholic: "both"});
+  }
+
+  ngOnInit(): void {
+    $('.ui.radio.checkbox').checkbox();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(subscription => subscription.unsubscribe());
   }
 
 }

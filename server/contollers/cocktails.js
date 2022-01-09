@@ -272,7 +272,7 @@ const searchIngredientByName = async (req,res,next) =>{
  
     try{
         if(alcohol == undefined || (alcohol!='Alcoholic' && alcohol!='Non alcoholic' && alcohol != 'Optional alcohol')){
-            const error=new Error('Alcoholic/Non_alcoholic or undefined');
+            const error=new Error('Alcoholic/Non alcoholic or undefined');
             error.status=400;
             throw error;
         }
