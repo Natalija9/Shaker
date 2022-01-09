@@ -4,6 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable, Subscription } from 'rxjs';
+;
 
 @Component({
   selector: 'app-signup',
@@ -12,12 +13,13 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class SignupComponent implements OnInit,OnDestroy {
   sub: Subscription = new Subscription();
-  user: User;
+  user: User | undefined;
   signUpForm: FormGroup;
 
 
-  constructor(private formBuilder: FormBuilder,private auth : AuthService) {
-    this.user = new User('1','peraperic', 'pera123', 22);
+  constructor(private formBuilder: FormBuilder,
+             private auth:AuthService) {
+    //this.user = new User('peraperic', 'pera123', 22);
 
     this.signUpForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.pattern(new RegExp("[a-zA-Z]{1,}[a-zA-Z0-9_-]{4,}"))]),
@@ -31,7 +33,8 @@ export class SignupComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy() : void {
-    this.sub.unsubscribe();
+    if(this.sub)
+      this.sub.unsubscribe();
   }
 
   onLogin() {
@@ -40,12 +43,11 @@ export class SignupComponent implements OnInit,OnDestroy {
   }
 
   onSignUp() {
-  
 
     const data = this.signUpForm.value;
 
     const usernameErrors: ValidationErrors | null | undefined = this.signUpForm.get('username')?.errors;
-
+    console.log(data.username);
     if(usernameErrors !== null ){
       window.alert('Invalid username');
       return;
@@ -65,13 +67,14 @@ export class SignupComponent implements OnInit,OnDestroy {
       return;
     }
 
+    console.log(data.password);
     if(data.password !== data.confirmPassword){
       window.alert('Password and confirmed password do not match');
       return;
     }
 
     const ageErrors: ValidationErrors | null | undefined = this.signUpForm.get('age')?.errors;
-
+    console.log(data.age)
     if( ageErrors !== null ){
       window.alert('Invalid age');
       return;
@@ -82,15 +85,15 @@ export class SignupComponent implements OnInit,OnDestroy {
       return;
     }
 
-    const obs : Observable<User | null> = this.auth.registerUser(data.username,data.password,data.age);
-
-    this.sub=obs.subscribe((user:User | null) =>{
-        console.log(user);
-    });
-
     Globals.shouldDisplayMainPage = true;
     Globals.shouldDisplayLogin = false;
     Globals.shouldDisplaySignUp = false;
+
+    const obs:Observable<User|null> = this.auth.registerUser(data.username,data.password,data.age);
+    
+    this.sub=obs.subscribe((user:User|null)=>{
+      console.log(user);
+    });
   }
 
 }

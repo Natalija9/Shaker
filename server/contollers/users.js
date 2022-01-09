@@ -14,28 +14,21 @@ const getUserByUsername = async (req, res, next) => {
   const username = req.params.username;
 
   try {
-    if (username == undefined) {
-      const error = new Error('Username missing');
-      error.status = 400;
-      throw error;
-    }
-
-    const user = await usersService.getUserByUsername(username);
-    if (user == null) {
-      res.status(404).json();
-    } else {
-      res.status(200).json(user);
-    }
-  } catch (error) {
-    next(error);
+    const jwt = await usersService.getUserJWTByUsername(username);
+    return res.status(201).json({
+      token:jwt
+    });
+  } catch (err) {
+    next(err);
   }
 };
 
 
 const addNewUser = async (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const age = req.body.age;
+  const { username, password, age } = req.body;
+
+  console.log('request Service: ');
+
   try {
     if (
       !username ||
@@ -47,26 +40,24 @@ const addNewUser = async (req, res, next) => {
       throw error;
     }
 
-    const user = await usersService.getUserByUsername(username);
-    if (user) {
-      const error = new Error('This username is already taken');
-      error.status = 403;
-      throw error;
-    }
+    console.log('Before user Service: ');
 
-    const jwt = await usersService.addNewUser(
+    const jwt = await usersService.registerNewUser(
       username,
       password,
       age
     );
-   return res.status(201).json({
-     token:jwt,
-   })
+
+    console.log('After user Service: ', jwt);
+
+    return res.status(201).json({
+      token: jwt
+    });
   } catch (error) {
     next(error);
   }
 };
-
+/*
 const changeUserPassword = async (req, res, next) => {
   const { username, oldPassword, newPassword } = req.body;
 
@@ -101,7 +92,8 @@ const changeUserPassword = async (req, res, next) => {
     next(error);
   }
 };
-
+*/
+/*
 const deleteUser = async (req, res, next) => {
   const username = req.params.username;
 
@@ -125,7 +117,7 @@ const deleteUser = async (req, res, next) => {
     next(error);
   }
 };
-
+*/
 
 const getFavourites = async(req, res, next) => {
   const username = req.params.username;
@@ -188,8 +180,8 @@ module.exports = {
   getUserByUsername,
   getAllUsers,
   addNewUser,
-  changeUserPassword,
-  deleteUser,
+  //changeUserPassword,
+  //deleteUser,
   getFavourites,
   addToFavourites
 };

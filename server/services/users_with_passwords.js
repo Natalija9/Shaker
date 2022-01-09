@@ -3,30 +3,33 @@ const User = require('../models/users');
 const bcrypt = require('bcryptjs');
 const jwtUtil = require('../utils/jwt');
 
-
 const hashPassword = async (password) => {
   const SALT_ROUNDS = 10;
   return await bcrypt.hash(password, SALT_ROUNDS);
 };
 
 const getAllUsers = async () => {
+  console.log('Zahtev primljen!');
   const users = await User.find({}).exec();
+  console.log('Zahtev obradjen: ', users)
   return users;
 };
 
+/*
 const getUserById = async (id) => {
   const user = await User.findById(id).exec();
   return user;
 };
+*/
 
 const getUserByUsername = async (username) => {
-  const user = await User.findOne({ username: username }).exec();
-  return user;
-};
+  console.log('Zahtev primljen: ', username);
 
-const getUsersByStatus = async (status) => {
-  const users = await User.find({ status: status }).exec();
-  return users;
+  const user = await User.findOne({ username: username }).exec();
+
+  console.log('Zahtev obradjen: ', user)
+
+  return user;
 };
 
 async function getUserJWTByUsername(username) {
@@ -35,33 +38,56 @@ async function getUserJWTByUsername(username) {
     throw new Error(`User with username ${username} does not exist!`);
   }
   return jwtUtil.generateJWT({
-    id: user.id,
+    //id: user.id,
     username: user.username,
-    password:user.password,
-    age:user.age
+    password: user.password,
+    age: user.age,
   });
 }
 
-
-const addNewUser = async (
+/*
+const getUsersByStatus = async (status) => {
+  const users = await User.find({ status: status }).exec();
+  return users;
+};
+*/
+/*
+const registerNewUser = async (
   username,
   password,
-  age,
-  
-) => {
+  age) => {
   const hashedPassword = await hashPassword(password);
   const newUser = new User({
     _id: new mongoose.Types.ObjectId(),
     username,
     password: hashedPassword,
-    age,
-
+    age
   });
 
   await newUser.save();
   return getUserJWTByUsername(username);
 };
+*/
 
+async function registerNewUser(username, password, age) {
+  const hashedPassword = await hashPassword(password);
+  console.log(username, hashPassword, age);
+
+  const user = new User({ 
+    _id: new mongoose.Types.ObjectId(), 
+    username, 
+    password: hashedPassword,
+    age});
+
+  console.log('Before save:', user)
+  await user.save();
+
+  console.log('After save:', user)
+
+  return getUserJWTByUsername(username);
+}
+
+/*
 const changeUserPassword = async (username, oldPassword, newPassword) => {
   const user = await User.findOne({ username: username }).exec();
   const passwordMatch = await bcrypt.compare(oldPassword, user.password);
@@ -80,17 +106,20 @@ const changeUserPassword = async (username, oldPassword, newPassword) => {
 
   return updatedUser;
 };
-
+*/
+/*
 const deleteUser = async (username) => {
   await User.findOneAndDelete({ username: username }).exec();
 };
+*/
 
 module.exports = {
   getAllUsers,
-  getUserById,
+  //getUserById,
   getUserByUsername,
-  getUsersByStatus,
-  addNewUser,
-  changeUserPassword,
-  deleteUser,
+  getUserJWTByUsername,
+  //getUsersByStatus,
+  registerNewUser,
+  //changeUserPassword,
+  //deleteUser,
 };

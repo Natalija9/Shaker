@@ -5,35 +5,34 @@ import { IJwtTokenData } from '../models/jwt-token-data';
   providedIn: 'root'
 })
 export class JwtService {
-  private static readonly USER_TOKEN_ID = "USER_JWT_TOKEN"; 
+  private static readonly USER_TOKEN_ID = 'USER_JWT_TOKEN';
 
   constructor() { }
 
-  public setToken(jwt : string) : void{
-      localStorage.setItem(JwtService.USER_TOKEN_ID,jwt);
+  public setToken(token:string):void{
+    localStorage.setItem(JwtService.USER_TOKEN_ID,token);
   }
 
-  public getToken() : string{
-    const token : string|null=localStorage.getItem(JwtService.USER_TOKEN_ID);
-    if(token===null){
+  public getToken():string{
+    const token:string|null=localStorage.getItem(JwtService.USER_TOKEN_ID);
+    if(!token){
       return '';
     }
     return token;
   }
 
-  public removeToken() : void{
+  public removeToken():void{
     localStorage.removeItem(JwtService.USER_TOKEN_ID);
   }
 
-  public getDataFromToken() : IJwtTokenData {
+  public getDataFromToken():IJwtTokenData{
     const token=this.getToken();
+    const payloadString: string=token.split('.')[1];
+    const userDataJson:string=atob(payloadString);
 
+    const payload:IJwtTokenData=JSON.parse(userDataJson);
 
-    const payLoadString:string=token.split('.')[1];
-    const userDataJSON:string=atob(payLoadString);
-    
-    const payload : IJwtTokenData=JSON.parse(userDataJSON);
     return payload;
   }
-
 }
+

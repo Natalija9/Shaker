@@ -1,6 +1,5 @@
-export interface IJwtTokenData {
-    id : string,
-    username: string,
-    password : string,
-    age : number
+export interface IJwtTokenData{
+    username:string,
+    password:string,
+    age:number
 }
