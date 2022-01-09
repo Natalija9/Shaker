@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder) {
-    this.user = new User('1','peraperic', 'pera123', 22);
+    this.user = new User('peraperic', 'pera123', 22);
 
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
