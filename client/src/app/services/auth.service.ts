@@ -63,6 +63,8 @@ export class AuthService {
     )
   }
 
-
-
+  public logout() {
+    this.jwt.removeToken();
+    this.userSubject.next(null);
+  }
 }

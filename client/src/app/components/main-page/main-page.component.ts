@@ -4,6 +4,7 @@ import { CocktailService } from 'src/app/services/cocktail.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Cocktail } from 'src/app/models/cocktail.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 declare const $: any;
 
@@ -19,7 +20,8 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   subs: Subscription[] = [];
 
-  constructor(private formBuilder: FormBuilder, private service: CocktailService) {
+  constructor(private formBuilder: FormBuilder, private service: CocktailService,
+    private auth:AuthService) {
     this.searchForm = new FormGroup({
       search: new FormControl('', [])
     });
@@ -60,6 +62,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   logOut(): void {
+
+    this.auth.logout();
+
     Globals.shouldDisplayLogin = true;
     Globals.shouldDisplayMainPage = false;
   }
