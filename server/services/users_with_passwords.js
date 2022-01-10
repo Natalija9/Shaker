@@ -5,7 +5,8 @@ const jwtUtil = require('../utils/jwt');
 
 const hashPassword = async (password) => {
   const SALT_ROUNDS = 10;
-  return await bcrypt.hash(password, SALT_ROUNDS);
+  const salt=await bcrypt.genSalt(SALT_ROUNDS);
+  return await bcrypt.hash(password, salt);
 };
 
 const isValidPassword = async (password) => {

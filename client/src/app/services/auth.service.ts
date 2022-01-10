@@ -12,7 +12,7 @@ import { JwtService } from './jwt.service';
 export class AuthService {
   private readonly urls={
     registerUrl:'http://localhost:5000/api/users/register',
-    loginUrl:'"http://localhost:5000/api/users/login"'
+    loginUrl:'http://localhost:5000/api/users/login'
   }
 
   private readonly userSubject: Subject<User | null> = new Subject<User | null>();
