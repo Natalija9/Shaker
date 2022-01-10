@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS=10;
 
 const userSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    //_id: mongoose.Schema.Types.ObjectId,
     username: {
         type: mongoose.Schema.Types.String,
         required: true  
@@ -33,8 +33,6 @@ userSchema.methods.setPassword = async function (password) {
   
   userSchema.methods.isValidPassword = async function (password) {
     return await bcrypt.compare(password, this.hash);
-    console.log(this.hash);
-    console.log(password);
   };
   
 

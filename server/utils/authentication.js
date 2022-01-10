@@ -28,13 +28,13 @@ module.exports.canAuthenticate = async (req, res, next) => {
       throw error;
     }
 
-    console.log('proba');
+
     if (!(await user.isValidPassword(password))) {
       const error = new Error(`Wrong password for username ${username}!`);
       error.status = 401;
       throw error;
     }
-    console.log('proba1');
+  
 
     // Ako je sve u redu, onda cemo na nivou req objekta sacuvati neophodne podatke o autorizaciji,
     // na primer, identifikator i username korisnika iz baze podataka
