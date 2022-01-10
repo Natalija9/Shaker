@@ -8,12 +8,18 @@ const hashPassword = async (password) => {
   return await bcrypt.hash(password, SALT_ROUNDS);
 };
 
+const isValidPassword = async (password) => {
+  return await bycript.compare(password,hashPassword(password));
+}
+
 const getAllUsers = async () => {
   console.log('Zahtev primljen!');
   const users = await User.find({}).exec();
   console.log('Zahtev obradjen: ', users)
   return users;
 };
+
+
 
 /*
 const getUserById = async (id) => {
@@ -120,6 +126,7 @@ module.exports = {
   getUserJWTByUsername,
   //getUsersByStatus,
   registerNewUser,
+  isValidPassword,
   //changeUserPassword,
   //deleteUser,
 };

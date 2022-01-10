@@ -175,11 +175,24 @@ const addToFavourites = async(req, res, next) => {
   }
 };
 
+const loginUser = async(req, res, next) => {
+  const username = req.username;
+
+  try {
+    const jwt = await usersService.getUserJWTByUsername(username);
+    return res.status(201).json({
+      token: jwt,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
 
 module.exports = {
   getUserByUsername,
   getAllUsers,
   addNewUser,
+  loginUser,
   //changeUserPassword,
   //deleteUser,
   getFavourites,

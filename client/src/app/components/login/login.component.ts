@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Globals } from '../../common/globals';
 import { User } from 'src/app/models/user.model'
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +11,12 @@ import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } fro
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-
-  user: User;
+  sub: Subscription = new Subscription();
   loginForm: FormGroup;
+  user: User;
 
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private auth:AuthService) {
     this.user = new User('peraperic', 'pera123', 22);
 
     this.loginForm = new FormGroup({
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
     Globals.shouldDisplayLogin = false;
   }
 
-  onLogin() {
+  onLogin(): void {
 
     const data = this.loginForm.value;
 
@@ -56,6 +57,15 @@ export class LoginComponent implements OnInit {
       window.alert('Invalid input');
       return;
     }
+
+    const obs: Observable<User | null> = this.auth.login(data.username, data.password);
+
+    this.sub = obs.subscribe((user: User | null) => {
+      console.log(user)
+    });
+
+    this.auth.login(data.username, data.password);
+
 
     Globals.shouldDisplayMainPage = true;
     Globals.shouldDisplayLogin = false;

@@ -1,37 +1,84 @@
-const jwt = require('jsonwebtoken');
+const express = require('express');
+//const User = require('../users/models/users');
+const userService=require('../services/users_with_passwords');
+const jwt = require('./jwt');
 
-const jwtSecret = process.env.JWT_SECRET || 'pveb_showtime';
-const adminUsername = process.env.ADMIN_USERNAME || 'admin';
-const adminPassword = process.env.ADMIN_PASSWORD || 'adminpass';
-const jwtOpts = { algorithm: 'HS256', expiresIn: '30d' };
+/**
+ * Funkcija srednjeg sloja koja proverava da li je moguce prijaviti korisnika sa datim korisnickim imenom i lozinkom.
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
+ */
+module.exports.canAuthenticate = async (req, res, next) => {
+  const username = req.body.username;
+  const password = req.body.password;
 
-// token koji treba proslediti je:
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-// eyJhZG1pblVzZXJuYW1lIjoiYWRtaW4iLCJhZG1pblBhc3N3b3JkIjoiYWRtaW5wYXNzIiwiaWF0IjoxNjE3NzM4NzEzLCJleHAiOjE2MjAzMzA3MTN9.
-// h-H96EdSvm_q6PFrKrjPoi-c5akNVgDynrrq1bTblIw
-
-const verifyToken = (req, res, next) => {
-  let token = req.headers['x-access-token'];
-
-  if (!token) {
-    return res.status(403).json({ auth: false, message: 'Nije prosledjen token.' });
-  }
-
-  jwt.verify(token, jwtSecret, (error, adminData) => {
-    if (error) {
-      return res
-        .status(500)
-        .json({ auth: false, message: 'Doslo je do problema prilikom provere tokena.' });
+  try {
+    // Validiramo podatke
+    if (!username || !password) {
+      const error = new Error('Please provide both username and password');
+      error.status = 400;
+      throw error;
     }
-    if (
-      adminData.adminUsername != adminUsername ||
-      adminData.adminPassword != adminPassword
-    ) {
-      return res.status(403).json({auth: false, message: 'Pogresno korisnicko ime i/ili sifra'});
+
+    const user = await userService.getUserByUsername(username);
+    if (!user) {
+      const error = new Error(`User with username ${username} does not exist!`);
+      error.status = 404;
+      throw error;
     }
-    
+
+    if (!(await userService.isValidPassword(password))) {
+      const error = new Error(`Wrong password for username ${username}!`);
+      error.status = 401;
+      throw error;
+    }
+
+    // Ako je sve u redu, onda cemo na nivou req objekta sacuvati neophodne podatke o autorizaciji,
+    // na primer, identifikator i username korisnika iz baze podataka
+    req.userId = user._id;
+    req.username = user.username;
+
+    // Pozivamo narednu funkciju srednjeg sloja
     next();
-  });
+  } catch (err) {
+    next(err);
+  }
 };
 
-module.exports = verifyToken;
+/**
+ * Funkcija srednjeg sloja koja proverava da li je JWT token koji je klijent poslao validan.
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ * @param {express.NextFunction} next 
+ */
+module.exports.isAuthenticated = async (req, res, next) => {
+  try {
+    // Ocekujemo da klijent uz svoj zahtev prosledi HTTP zaglavlje oblika:
+    // "Authorization": "Bearer <JWT>"
+    const authHeader = req.header("Authorization");
+    if (!authHeader) {
+      const error = new Error('You need to pass Authorization header with your request!');
+      error.status = 403;
+      throw error;
+    }
+
+    const token = authHeader.split(' ')[1];
+    const decodedToken = jwt.verifyJWT(token);
+    if (!decodedToken) {
+      const error = new Error('Not Authenticated!');
+      error.status = 401;
+      throw error;
+    }
+
+    // Citamo podatke iz dekodiranog tokena i cuvamo na nivou req objekta,
+    // kako bi naredna funkcija srednjeg sloja mogla da iskoristi taj podatak.
+    req.userId = decodedToken.id;
+    req.username = decodedToken.username;
+
+    // Pozivamo narednu funkciju srednjeg sloja
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
