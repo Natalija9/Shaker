@@ -60,6 +60,7 @@ export class CocktailService {
   getRandomCocktail() : Observable<Cocktail[]> {
     return this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/random");
   }
+
 }
 
 

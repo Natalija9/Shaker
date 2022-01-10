@@ -12,7 +12,7 @@ router.get('/:username', usersController.getUserByUsername);
 
 
 router.post('/register', usersController.addNewUser);
-router.post('/login',authentication.canAuthenticate,usersController.loginUser);
+router.post('/login', authentication.canAuthenticate, usersController.loginUser);
 //router.put('/', usersController.changeUserPassword);
 //router.delete('/:username', usersController.deleteUser);
 router.put('/addToFavourites', usersController.addToFavourites);

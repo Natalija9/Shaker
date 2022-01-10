@@ -20,6 +20,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   subs: Subscription[] = [];
 
+
   constructor(private formBuilder: FormBuilder, private service: CocktailService,
     private auth:AuthService) {
     this.searchForm = new FormGroup({
@@ -32,19 +33,21 @@ export class MainPageComponent implements OnInit, OnDestroy {
     })
 
     this.subs.push(x);
+
+
   }
 
   onSubmit(event: any){
     if(event.keyCode == 13) {
       const data = this.searchForm.value;
-      
+
       this.cocktails = [];
       this.service.searchText = data.search;
       let x = this.service.getCocktails().subscribe(cocktails => {
         this.cocktails = cocktails;
       })
       this.subs.push(x);
-      
+
       this.service.titleText = "";
 
       setTimeout(() => {

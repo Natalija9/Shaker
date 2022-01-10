@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import {map,tap} from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import {map, catchError} from 'rxjs/operators';
 import { IJwtTokenData } from '../models/jwt-token-data';
 import { User } from '../models/user.model'
 import { JwtService } from './jwt.service';
@@ -18,22 +18,26 @@ export class AuthService {
   private readonly userSubject: Subject<User | null> = new Subject<User | null>();
   public readonly user: Observable<User | null> = this.userSubject.asObservable();
 
+  private userLoggedIn: boolean = false;
 
+  constructor(private http:HttpClient, private jwt:JwtService) { }
 
-  constructor(private http:HttpClient,
-              private jwt:JwtService) { }
+  public get isUserLoggedIn(): boolean {
+    return this.userLoggedIn;
+  }
+
 
   public sendUserDataIfExists(): User | null {
     const payload: IJwtTokenData | null = this.jwt.getDataFromToken();
-      if(!payload) {
-          return null;
-          }
-            
-      const newUser: User =  new User(payload.username, payload.password, payload.age);
-      this.userSubject.next(newUser);
-          return newUser;
+
+    const newUser: User | null = payload ? new User(payload.username, payload.password, payload.age) : null;
+
+    this.userSubject.next(newUser);
+    this.userLoggedIn = newUser !== null;
+
+    return newUser;
   }
-            
+
 
   public registerUser(username:string,password:string,age:string) : Observable<User | null>{
     const body={
@@ -43,8 +47,8 @@ export class AuthService {
     };
     const obs:Observable<{token:string}>= this.http.post<{token:string}>(this.urls.registerUrl,body);
     return obs.pipe(
-      tap((response: {token: string}) => this.jwt.setToken(response.token)),
-      map((response: {token: string}) => this.sendUserDataIfExists())
+      catchError((error: HttpErrorResponse) => this.handleError(error)),
+      map((response: {token: string}) => this.mapResponseToUser(response))
     )
 
   }
@@ -55,11 +59,10 @@ export class AuthService {
       password,
     };
     const obs: Observable<{token: string}> = this.http.post<{token: string}>(this.urls.loginUrl, body);
-  
-    // prvo treba sacuvati token, a onda ga 'pretvoriti' u korisnika
+
     return obs.pipe(
-      tap((response: {token: string}) => this.jwt.setToken(response.token)),
-      map((response: {token: string}) => this.sendUserDataIfExists())
+      catchError((error: HttpErrorResponse) => this.handleError(error)),
+      map((response: {token: string}) => this.mapResponseToUser(response))
     )
   }
 
@@ -67,4 +70,20 @@ export class AuthService {
     this.jwt.removeToken();
     this.userSubject.next(null);
   }
+
+  private handleError(error: HttpErrorResponse): Observable<{ token: string }> {
+    const serverError: { message: string; status: number; stack: string } = error.error;
+    window.alert('Error');
+    // window.alert(`There was an error: ${serverError.message}. Server returned code: ${serverError.status}`);
+    return of({ token: this.jwt.getToken() });
+  }
+
+  private mapResponseToUser(response: { token: string }): User | null{
+    // Cuvamo JWT u memoriju veb pregledaca
+    this.jwt.setToken(response.token);
+    // Saljemo podatke o korisniku na osnovu postavljenog JWT tokena
+    return this.sendUserDataIfExists();
+  }
+
+
 }

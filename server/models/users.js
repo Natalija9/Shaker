@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS=10;
 
 const userSchema = new mongoose.Schema({
-    //_id: mongoose.Schema.Types.ObjectId,
     username: {
         type: mongoose.Schema.Types.String,
         required: true  
@@ -25,6 +24,7 @@ const userSchema = new mongoose.Schema({
     },
     favourites: [mongoose.Schema.Types.String]
 });
+
 
 userSchema.methods.setPassword = async function (password) {
     this.salt = await bcrypt.genSalt(SALT_ROUNDS);

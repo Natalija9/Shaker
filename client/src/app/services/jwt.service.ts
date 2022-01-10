@@ -25,8 +25,11 @@ export class JwtService {
     localStorage.removeItem(JwtService.USER_TOKEN_ID);
   }
 
-  public getDataFromToken():IJwtTokenData{
-    const token=this.getToken();
+  public getDataFromToken(): IJwtTokenData | null{
+
+    const token = this.getToken();
+    if(token === '')
+      return null;
     const payloadString: string=token.split('.')[1];
     const userDataJson:string=atob(payloadString);
 

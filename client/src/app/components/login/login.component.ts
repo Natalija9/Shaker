@@ -38,15 +38,31 @@ export class LoginComponent implements OnInit {
 
     const data = this.loginForm.value;
 
-    const usernameErrors: ValidationErrors | null | undefined = this.loginForm.get('username')?.errors;
+    this.formValidation();
 
+    this.sub = this.auth.login(data.username, data.password).subscribe((user: User | null) => {
+      if(user !== null){
+        console.log(user);
+        Globals.shouldDisplayMainPage = true;
+        Globals.shouldDisplayLogin = false;
+        Globals.shouldDisplaySignUp = false;
+      }
+      else{
+        this.loginForm.reset();
+      }
+    });
+
+  }
+
+  private formValidation(){
+
+    const usernameErrors: ValidationErrors | null | undefined = this.loginForm.get('username')?.errors;
     if(usernameErrors !== null ){
       window.alert('Invalid username');
       return;
     }
 
     const passwordErrors: ValidationErrors | null | undefined = this.loginForm.get('password')?.errors;
-
     if( passwordErrors !== null ){
       window.alert('Invalid password');
       return;
@@ -58,18 +74,6 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const obs: Observable<User | null> = this.auth.login(data.username, data.password);
-
-    this.sub = obs.subscribe((user: User | null) => {
-      console.log(user)
-    });
-
-    this.auth.login(data.username, data.password);
-
-
-    Globals.shouldDisplayMainPage = true;
-    Globals.shouldDisplayLogin = false;
-    Globals.shouldDisplaySignUp = false;
   }
 
 

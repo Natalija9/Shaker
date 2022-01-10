@@ -50,6 +50,7 @@ const deleteUser = async (username) => {
 
 const getFavourites = async (username) => {
   const user = await User.findOne({ username: username }).exec();
+  console.log(user);
   return user.favourites;
 }
 

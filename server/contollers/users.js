@@ -142,10 +142,10 @@ const getFavourites = async(req, res, next) => {
 
 const addToFavourites = async(req, res, next) => {
 
-  const {username, id } = req.body;
+  const {username, cocktail } = req.body;
 
   try {
-    if (!username || !id ) {
+    if (!username || !cocktail ) {
       const error = new Error('Invalid input');
       error.status = 400;
       throw error;
@@ -160,7 +160,7 @@ const addToFavourites = async(req, res, next) => {
 
     const newFave = await usersService.addToFavourites(
       username,
-      id
+      cocktail
     );
 
     if (newFave) {
