@@ -1,17 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../models/users');
-const bcrypt = require('bcryptjs');
+//const bcrypt = require('bcryptjs');
 const jwtUtil = require('../utils/jwt');
-
-const hashPassword = async (password) => {
-  const SALT_ROUNDS = 10;
-  const salt=await bcrypt.genSalt(SALT_ROUNDS);
-  return await bcrypt.hash(password, salt);
-};
-
-const isValidPassword = async (password) => {
-  return await bycript.compare(password,hashPassword(password));
-}
 
 const getAllUsers = async () => {
   console.log('Zahtev primljen!');
@@ -19,8 +9,6 @@ const getAllUsers = async () => {
   console.log('Zahtev obradjen: ', users)
   return users;
 };
-
-
 
 /*
 const getUserById = async (id) => {
@@ -77,14 +65,10 @@ const registerNewUser = async (
 */
 
 async function registerNewUser(username, password, age) {
-  const hashedPassword = await hashPassword(password);
-  console.log(username, hashPassword, age);
-
-  const user = new User({ 
-    _id: new mongoose.Types.ObjectId(), 
-    username, 
-    password: hashedPassword,
-    age});
+  const user=new User();
+  user.username=username;
+  await user.setPassword(password);
+  user.age=age;
 
   console.log('Before save:', user)
   await user.save();
@@ -127,7 +111,6 @@ module.exports = {
   getUserJWTByUsername,
   //getUsersByStatus,
   registerNewUser,
-  isValidPassword,
   //changeUserPassword,
   //deleteUser,
 };

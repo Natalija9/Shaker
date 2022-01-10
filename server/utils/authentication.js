@@ -28,7 +28,7 @@ module.exports.canAuthenticate = async (req, res, next) => {
       throw error;
     }
 
-    if (!(await userService.isValidPassword(password))) {
+    if (!(await user.isValidPassword(password))) {
       const error = new Error(`Wrong password for username ${username}!`);
       error.status = 401;
       throw error;
