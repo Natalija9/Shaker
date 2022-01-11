@@ -70,6 +70,10 @@ export class CocktailService {
     return this.http.put<Cocktail[]>("http://localhost:5000/api/favourites", { "username": this.username, "cocktailId" : cocktailId, "cocktailName" : cocktailName}, {'headers': { 'content-type': 'application/json'}});
   }
 
+  removeFromFavourites(cocktailId: number) : Observable<Cocktail[]> {
+    return this.http.put<Cocktail[]>("http://localhost:5000/api/favourites/" + this.username, { "username": this.username, "cocktailId" : cocktailId}, {'headers': { 'content-type': 'application/json'}});
+  }
+
 }
 
 

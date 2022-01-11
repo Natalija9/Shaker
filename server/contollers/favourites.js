@@ -57,9 +57,36 @@ const getFavourites = async(req, res, next) => {
       next(error);
     }
   };
+
+
+  const removeFromFavourites = async(req, res, next) => {
+    const {username, cocktailId} = req.body;
+  
+    try {
+      if (username === undefined) {
+        const error = new Error('Username missing');
+        error.status = 400;
+        throw error;
+      }
+
+      console.log("kontroler ", username, cocktailId);
+  
+      let data = await favouritesService.removeFromFavourites(username, cocktailId);
+
+      console.log("servis ", data);
+      if (data === null) {
+        res.status(404).json();
+      } else {
+        res.status(200).json(data);
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
   
   module.exports = {
       getFavourites,
-      addToFavourites
+      addToFavourites,
+      removeFromFavourites
   }
   

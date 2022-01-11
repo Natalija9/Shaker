@@ -65,11 +65,10 @@ export class DrinkInfoComponent implements OnInit {
 
   onHeartClicked(): void{
     if(this.inFavourites){
-      const index = this.cocktailService.favouriteCocktails.findIndex(x => x.id == this.cocktail.id);
-      this.cocktailService.favouriteCocktails.splice(index, 1);
+      this.cocktailService.removeFromFavourites(this.cocktail.id).subscribe();
+
     }
     else{
-      // this.cocktailService.favouriteCocktails.push(this.cocktail);
       this.cocktailService.addToFavourites(this.cocktail.id, this.cocktail.name).subscribe();
     }
 

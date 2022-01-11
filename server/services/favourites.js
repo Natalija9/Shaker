@@ -38,9 +38,23 @@ return newFave.cocktails;
 
 }
 
+const removeFromFavourites = async (username, id) => {
+  console.log("servis ", username, id);
+
+await Favourites.findOneAndUpdate(
+  { username : username }, 
+  { $pull: { cocktails: { id: id} } },
+);
+
+const data = await Favourites.findOne({username : username}).exec();
+console.log("servis ", data);
+return data.cocktails;
+}
+
 
 module.exports = {
     getFavourites,
     addToFavourites,
-    createNewFavourites
+    createNewFavourites,
+    removeFromFavourites
 }

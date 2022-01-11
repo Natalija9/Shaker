@@ -1,10 +1,12 @@
 const express = require('express');
-const usersController = require('../../contollers/favourites');
+const favouritesController = require('../../contollers/favourites');
 
 const router = express.Router();
 
-router.get('/:username', usersController.getFavourites);
-router.put('/', usersController.addToFavourites);
+router.get('/:username', favouritesController.getFavourites);
+router.put('/:username', favouritesController.removeFromFavourites);
+router.put('/', favouritesController.addToFavourites);
+
 
 module.exports = router;
 
