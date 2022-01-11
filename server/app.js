@@ -2,6 +2,8 @@ const express = require('express');
 const usersRouter = require('./routes/api/users');
 const ratingsRouter = require('./routes/api/ratings');
 const cocktailsRouter = require('./routes/api/cocktails');
+const favouritesRouter = require('./routes/api/favourites');
+
 const { urlencoded, json } = require('body-parser');
 const mongoose = require('mongoose');
 
@@ -42,6 +44,7 @@ app.use(urlencoded({ extended: false }));
 app.use('/api/users', usersRouter);
 app.use('/api/ratings', ratingsRouter);
 app.use('/api/cocktails',cocktailsRouter);
+app.use('/api/favourites', favouritesRouter);
 
 app.use(function (req, res, next) {
   const error = new Error('Zahtev nije podrzan!');

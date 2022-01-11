@@ -1,0 +1,15 @@
+[
+    {
+        "username" : "lucija",
+        "cocktails" : [
+            {
+                "cocktailId" : 11400,
+                "cocktailName" : "Gin Fizz"
+            },
+            {
+                "cocktailId" : 12618,
+                "cocktailName" : "Orangeade"
+            }
+        ]
+    }
+]

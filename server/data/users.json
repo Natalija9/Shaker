@@ -1,33 +1,33 @@
 [
     {
-        "favourites": [],
-        "_id": "61dc0ca4ba59201764d8dc23",
+        "_id": "61dd5ad4c70c2715163c6c4f",
         "username": "lucija",
-        "password": "$2a$10$eIaY6MYQgvT9HaNT/BDKjOvScTzp4njU4RRswZ7EHi0GTneT4ThVW",
+        "salt": "$2b$10$JSJMp/iw44Zafxei5E35YO",
+        "hash": "$2b$10$JSJMp/iw44Zafxei5E35YOM.MjD1Aaiv9wV2q9MjxeuFG8zA4HLOG",
         "age": 22,
         "__v": 0
     },
     {
-        "favourites": [],
-        "_id": "61dc0cc8ba59201764d8dc2a",
-        "username": "natalija",
-        "password": "$2a$10$ihaxm98zkvE/3jSrh148peTwhP4qwfWjDzomHtsGbRFvZ.1PemF2K",
-        "age": 22,
-        "__v": 0
-    },
-    {
-        "favourites": [],
-        "_id": "61dc0cefba59201764d8dc31",
+        "_id": "61dd5af1c70c2715163c6c56",
         "username": "jovana",
-        "password": "$2a$10$ibe9ZtZqfzywEj8.D4KZ9uuAkgojRbF.7nv4Z/L8brzExs8R1Urwe",
+        "salt": "$2b$10$PIgSTc7taKtze63Wy7mf9e",
+        "hash": "$2b$10$PIgSTc7taKtze63Wy7mf9eXh9jx4oPXUNjY7LUMMwSeU3rOLEkByq",
         "age": 22,
         "__v": 0
     },
     {
-        "favourites": [],
-        "_id": "61dc0d0eba59201764d8dc38",
+        "_id": "61dd5b0fc70c2715163c6c5a",
+        "username": "natalija",
+        "salt": "$2b$10$FzemEzsK7L2kC57bUvJ97u",
+        "hash": "$2b$10$FzemEzsK7L2kC57bUvJ97ue589yKs0AvwknTD6Hz7xnZ8nE.Cjzmq",
+        "age": 22,
+        "__v": 0
+    },
+    {
+        "_id": "61dd5b2ec70c2715163c6c61",
         "username": "misko",
-        "password": "$2a$10$iyaKLQWg/.7EolMr4U1kau.j5CoP2v3kR8kk3VRFfuGKy3OAcafoG",
+        "salt": "$2b$10$qmVH697QVwnTav6hg1mGNO",
+        "hash": "$2b$10$qmVH697QVwnTav6hg1mGNOkI1qqXoJAn6J9oz9nK8Nj6kYSwdzzlK",
         "age": 22,
         "__v": 0
     }

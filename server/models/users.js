@@ -21,9 +21,8 @@ const userSchema = new mongoose.Schema({
     age: {
         type: mongoose.Schema.Types.Number,
         required: true
-    },
-    favourites: [mongoose.Schema.Types.String]
-});
+    }
+  });
 
 
 userSchema.methods.setPassword = async function (password) {

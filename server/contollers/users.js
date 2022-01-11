@@ -119,61 +119,6 @@ const deleteUser = async (req, res, next) => {
 };
 */
 
-const getFavourites = async(req, res, next) => {
-  const username = req.params.username;
-
-  try {
-    if (username == undefined) {
-      const error = new Error('Username missing');
-      error.status = 400;
-      throw error;
-    }
-
-    const user = await usersService.getFavourites(username);
-    if (user == null) {
-      res.status(404).json();
-    } else {
-      res.status(200).json(user);
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-
-const addToFavourites = async(req, res, next) => {
-
-  const {username, cocktail } = req.body;
-
-  try {
-    if (!username || !cocktail ) {
-      const error = new Error('Invalid input');
-      error.status = 400;
-      throw error;
-    }
-
-    const user = await usersService.getUserByUsername(username);
-    if (!user) {
-      const error = new Error('Invalid username');
-      error.status = 404;
-      throw error;
-    }
-
-    const newFave = await usersService.addToFavourites(
-      username,
-      cocktail
-    );
-
-    if (newFave) {
-      res.status(200).json(newFave);
-    } else {
-      const error = new Error('Invalid username or id');
-      error.status = 403;
-      throw error;
-    }
-  } catch (error) {
-    next(error);
-  }
-};
 
 const loginUser = async(req, res, next) => {
   const username = req.username;
@@ -194,7 +139,5 @@ module.exports = {
   addNewUser,
   loginUser,
   //changeUserPassword,
-  //deleteUser,
-  getFavourites,
-  addToFavourites
+  //deleteUser
 };

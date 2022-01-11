@@ -1,4 +1,5 @@
-import { Subscription } from 'rxjs';
+import { User } from './../../models/user.model';
+import { Subscription, Observable } from 'rxjs';
 import { Globals } from './../../common/globals';
 import { CocktailService } from 'src/app/services/cocktail.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
@@ -20,7 +21,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   subs: Subscription[] = [];
 
-
   constructor(private formBuilder: FormBuilder, private service: CocktailService,
     private auth:AuthService) {
     this.searchForm = new FormGroup({
@@ -33,7 +33,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
     })
 
     this.subs.push(x);
-
 
   }
 

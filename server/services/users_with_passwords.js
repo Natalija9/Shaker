@@ -104,21 +104,6 @@ const deleteUser = async (username) => {
 };
 */
 
-
-const getFavourites = async (username) => {
-  const user = await User.findOne({ username: username }).exec();
-  return user.favourites;
-}
-
-const addToFavourites = async (username, cocktail) => {
-  const newFave = await User.findOneAndUpdate(
-    {username : username},
-    {$push: {favourites: cocktail}},
-    {new: true}
-  );
-
-  return newFave;
-};
   
 
 module.exports = {
@@ -130,6 +115,4 @@ module.exports = {
   registerNewUser,
   //changeUserPassword,
   //deleteUser,
-  getFavourites,
-  addToFavourites
 };
