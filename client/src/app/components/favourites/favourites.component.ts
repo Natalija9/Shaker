@@ -15,15 +15,18 @@ export class FavouritesComponent implements OnInit {
 
   @Output() cocktailsEvent: EventEmitter<Cocktail[]> = new EventEmitter<Cocktail[]>();
   cocktails: Cocktail[];
-  favouriteCocktails: Cocktail[];
+  favouriteCocktails: Cocktail[] = [];
 
   subs: Subscription[] = [];
-
 
   constructor(private cocktailService: CocktailService) {
 
     this.cocktails = [];
-    this.favouriteCocktails = cocktailService.favouriteCocktails;
+    let x = cocktailService.getFavouriteCocktails().subscribe(data => {
+      this.favouriteCocktails = data;
+      this.cocktailService.favouriteCocktails = data;
+    });
+    this.subs.push(x);
   }
 
    onClick(cocktailId: number): void {
@@ -32,6 +35,15 @@ export class FavouritesComponent implements OnInit {
     this.subs.push(x);
     this.cocktailService.titleText = "One of your favourites";
     this.cocktailsEvent.emit(this.cocktails);
+   }
+
+   refreshList() : void {
+    let x = this.cocktailService.getFavouriteCocktails().subscribe(data => {
+      this.favouriteCocktails = data;
+      this.cocktailService.favouriteCocktails = data;
+    });
+    this.subs.push(x);
+
    }
 
   ngOnInit(): void {

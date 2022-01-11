@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, of } from 'rxjs';
-import {map, catchError} from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { IJwtTokenData } from '../models/jwt-token-data';
 import { User } from '../models/user.model'
 import { JwtService } from './jwt.service';

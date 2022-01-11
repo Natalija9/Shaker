@@ -1,3 +1,4 @@
+import { CocktailService } from 'src/app/services/cocktail.service';
 import { Component, OnInit } from '@angular/core';
 import { Globals } from '../../common/globals';
 import { User } from 'src/app/models/user.model'
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   user: User;
 
 
-  constructor(private formBuilder: FormBuilder,private auth:AuthService) {
+  constructor(private formBuilder: FormBuilder, private auth:AuthService, private cocktailService: CocktailService) {
     this.user = new User('peraperic', 'pera123', 22);
 
     this.loginForm = new FormGroup({
@@ -43,6 +44,8 @@ export class LoginComponent implements OnInit {
     this.sub = this.auth.login(data.username, data.password).subscribe((user: User | null) => {
       if(user !== null){
         console.log(user);
+        this.cocktailService.username = user.username;
+
         Globals.shouldDisplayMainPage = true;
         Globals.shouldDisplayLogin = false;
         Globals.shouldDisplaySignUp = false;

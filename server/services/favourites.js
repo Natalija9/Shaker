@@ -12,8 +12,8 @@ const addToFavourites = async (username, id, name) => {
   await Favourites.findOneAndUpdate(
     {username : username},
     {$push: {cocktails: {
-      cocktailId : id,
-      cocktailName : name
+      id : id,
+      name : name
     }}},
     { useFindAndModify: false }
   );
@@ -28,8 +28,8 @@ const createNewFavourites = async (username, id, name) => {
   const newFave = new Favourites({
     username : username,
     cocktails: {
-      cocktailId : id,
-      cocktailName : name
+      id : id,
+      name : name
     }
 });
 

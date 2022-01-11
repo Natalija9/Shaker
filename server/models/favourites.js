@@ -6,8 +6,8 @@ const favouritesSchema = new mongoose.Schema({
         required: true
     },
     cocktails: [{
-        cocktailId: mongoose.Schema.Types.Number,
-        cocktailName: mongoose.Schema.Types.String
+        id: mongoose.Schema.Types.Number,
+        name: mongoose.Schema.Types.String
     }]
 })
 

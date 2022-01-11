@@ -12,6 +12,7 @@ export class CocktailService {
   result: Observable<Cocktail[]>;
   favouriteCocktails: Cocktail[];
 
+  username: string = '';
   titleText: string = "Recommended cocktails";
 
 
@@ -59,6 +60,14 @@ export class CocktailService {
 
   getRandomCocktail() : Observable<Cocktail[]> {
     return this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/random");
+  }
+
+  getFavouriteCocktails() : Observable<Cocktail[]> {
+    return this.http.get<Cocktail[]>("http://localhost:5000/api/favourites/" + this.username);
+  }
+
+  addToFavourites(cocktailId: number, cocktailName: string) : Observable<Cocktail[]> {
+    return this.http.put<Cocktail[]>("http://localhost:5000/api/favourites", { "username": this.username, "cocktailId" : cocktailId, "cocktailName" : cocktailName}, {'headers': { 'content-type': 'application/json'}});
   }
 
 }

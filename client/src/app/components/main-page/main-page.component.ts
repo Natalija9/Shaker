@@ -41,21 +41,19 @@ export class MainPageComponent implements OnInit, OnDestroy {
       const data = this.searchForm.value;
 
       this.cocktails = [];
+      this.service.titleText = '';
       this.service.searchText = data.search;
       let x = this.service.getCocktails().subscribe(cocktails => {
         this.cocktails = cocktails;
-      })
-      this.subs.push(x);
 
-      this.service.titleText = "";
-
-      setTimeout(() => {
         if(this.cocktails.length > 0)
           this.service.titleText = "Search results";
         else
           this.service.titleText = "There are no results! You can search something else!";
-      }, 500);
-      this.searchForm.reset();
+      })
+      this.subs.push(x);
+
+    this.searchForm.reset();
     }
   }
 

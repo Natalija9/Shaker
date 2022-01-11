@@ -3,12 +3,12 @@
         "username" : "lucija",
         "cocktails" : [
             {
-                "cocktailId" : 11400,
-                "cocktailName" : "Gin Fizz"
+                "id" : 11410,
+                "name" : "Gin Fizz"
             },
             {
-                "cocktailId" : 12618,
-                "cocktailName" : "Orangeade"
+                "id" : 12618,
+                "name" : "Orangeade"
             }
         ]
     }
