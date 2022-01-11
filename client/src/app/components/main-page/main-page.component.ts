@@ -21,7 +21,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
 
   subs: Subscription[] = [];
 
-  constructor(private formBuilder: FormBuilder, private service: CocktailService,
+  constructor(private formBuilder: FormBuilder, public service: CocktailService,
     private auth:AuthService) {
     this.searchForm = new FormGroup({
       search: new FormControl('', [])
@@ -61,6 +61,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.cocktails = data;
   }
 
+
   logOut(): void {
 
     this.auth.logout();
@@ -78,6 +79,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
     .sidebar('hide');
 
     $('.dropdown').dropdown();
+
   }
 
   ngOnDestroy(): void {

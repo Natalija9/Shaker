@@ -43,7 +43,6 @@ export class FavouritesComponent implements OnInit {
       this.cocktailService.favouriteCocktails = data;
     });
     this.subs.push(x);
-
    }
 
   ngOnInit(): void {

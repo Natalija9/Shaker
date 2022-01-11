@@ -1,7 +1,10 @@
 <div class="ui dropdown icon right attached item" (click)="refreshList()">
+
   <i class="heart icon"></i>
   &nbsp;Favourites
   <div class="menu">
+    <a class="item" *ngIf="favouriteCocktails.length === 0">Your favourite cocktails will appear here!</a>
+
     <a class="item"  *ngFor="let cocktail of favouriteCocktails;" (click) = "onClick(cocktail.id)">
       <i class="pink heart outline icon"></i>
       {{ cocktail.name }}
