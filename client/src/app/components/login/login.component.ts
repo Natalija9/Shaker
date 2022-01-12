@@ -48,6 +48,10 @@ export class LoginComponent implements OnInit {
       if(user !== null){
         console.log(user);
         this.cocktailService.username = user.username;
+        if(user.age < 18)
+          this.cocktailService.isAdult=true;
+        else
+          this.cocktailService.isAdult=false;
         this.cocktailService.getRatedCocktails();
         this.router.navigateByUrl('main-page');
       }

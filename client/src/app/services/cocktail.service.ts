@@ -13,6 +13,7 @@ export class CocktailService {
   favouriteCocktails: Cocktail[] = [];
   ratedCocktails: number[] = [11410, 12618];
 
+  isAdult: boolean = false;
   username: string = '';
   titleText: string = "Recommended cocktails";
 
