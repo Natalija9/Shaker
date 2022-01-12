@@ -3,6 +3,8 @@ import { CocktailService } from 'src/app/services/cocktail.service';
 import { Cocktail } from 'src/app/models/cocktail.model';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 declare const $: any;
 
@@ -22,6 +24,9 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   subs: Subscription[] = [];
 
+  private userSub : Subscription=new Subscription();
+  public user:User|null=null;
+  public disabled:boolean=false;
   filterForm: FormGroup;
   categories: String[] = [
     "Ordinary_Drink", "Cocktail", "Milk Float Shake", "Cocoa", "Shot",
@@ -34,6 +39,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     "Shot glass", "Punch bowl", "Pitcher", "Beer glass", "Martini glass", "Margarita glass", "Wine glass"
   ];
 
+
   get categoriesFormArray(): FormArray {
     return this.filterForm.get("categoriesForm") as FormArray;
   }
@@ -42,10 +48,21 @@ export class FilterComponent implements OnInit, OnDestroy {
     return this.filterForm.get("glassesForm") as FormArray;
   }
 
-  constructor(private service: CocktailService) {
+  constructor(private service: CocktailService,
+              private auth:AuthService) {
+    this.userSub=this.auth.user.subscribe((user:User|null)=>{
+      this.user=user;
+      
+    })
+    this.auth.sendUserDataIfExists();
+    if(this.user !== undefined && this.user !== null){
+      if(this.user.age<18)
+      this.disabled=true;
+    }
+
     this.cocktails = [];
     this.filterForm = new FormGroup({
-      alcoholic: new FormControl('both', []),
+      alcoholic: new FormControl(!this.disabled?'both':'nonAlcoholic', []),
       categoriesForm: new FormArray([]),
       glassesForm: new FormArray([])
     });
@@ -131,7 +148,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
 
 
-    this.filterForm.reset({alcoholic: "both"});
+    this.filterForm.reset({alcoholic:!this.disabled?"both":"nonAlcoholic"});
   }
 
   ngOnInit(): void {
@@ -140,6 +157,8 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.forEach(subscription => subscription.unsubscribe());
+    if(this.userSub)
+      this.userSub.unsubscribe();
   }
 
 }

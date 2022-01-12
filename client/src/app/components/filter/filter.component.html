@@ -25,7 +25,7 @@
           <div class="grouped fields">
             <div class="fluid field">
               <div class="ui radio checkbox">
-                <input type="radio" value="alcoholic" formControlName ="alcoholic">
+                <input type="radio" value="alcoholic" [attr.disabled]="disabled ? true : null" formControlName ="alcoholic">
                 <label style="color: lightpink; font-size: small;">Alcoholic</label>
               </div>
             </div>
@@ -37,7 +37,7 @@
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" [checked]="true" value="both" formControlName ="alcoholic">
+                <input type="radio" [checked]="true" value="both" [attr.disabled]="disabled ? true : null" formControlName ="alcoholic">
                 <label style="color: lightpink; font-size: small;">Both</label>
               </div>
             </div>
