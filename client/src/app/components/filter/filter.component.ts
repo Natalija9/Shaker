@@ -3,11 +3,8 @@ import { CocktailService } from 'src/app/services/cocktail.service';
 import { Cocktail } from 'src/app/models/cocktail.model';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
-import { User } from 'src/app/models/user.model';
-import { AuthService } from 'src/app/services/auth.service';
 
 declare const $: any;
-
 
 @Component({
   selector: 'app-filter',
@@ -47,10 +44,11 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   constructor(private service: CocktailService) {
-    this.disabled=this.service.isAdult;
+
+    this.disabled = !this.service.isAdult;
     this.cocktails = [];
     this.filterForm = new FormGroup({
-      alcoholic: new FormControl(!this.service.isAdult ? 'both' : 'nonAlcoholic', []),
+      alcoholic: new FormControl(this.service.isAdult ? 'both' : 'nonAlcoholic', []),
       categoriesForm: new FormArray([]),
       glassesForm: new FormArray([])
     });
@@ -67,7 +65,6 @@ export class FilterComponent implements OnInit, OnDestroy {
     const selectedCategories = data.categoriesForm;
     const selectedGlasses = data.glassesForm;
 
-    this.cocktails = [];
     this.alcoholicCocktails = [];
     this.categoryCocktails = [];
     this.glassCocktails = [];
@@ -126,33 +123,38 @@ export class FilterComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.service.titleText = "";
 
     setTimeout(() => {
 
-      if(data.alcoholic === "both" && this.categoryCocktails.length > 0){
-        this.alcoholicCocktails = this.categoryCocktails;
+      this.service.titleText = "";
+      this.cocktails = [];
+      let result = [];
+
+      if(this.categoryCocktails.length === 0 && this.glassCocktails.length === 0){
+          result = this.alcoholicCocktails;
       }
       else if(data.alcoholic === "both"){
-        this.alcoholicCocktails = this.glassCocktails;
+        if(this.categoryCocktails.length > 0 && this.glassCocktails.length > 0)
+          result = this.categoryCocktails.filter((c: Cocktail) => this.glassCocktails.findIndex(x => x.id == c.id) !== -1);
+        else{
+          result = this.categoryCocktails.length > 0 ? this.categoryCocktails : this.glassCocktails;
+        }
       }
-      else if(this.categoryCocktails.length > 0){
-        this.alcoholicCocktails = this.alcoholicCocktails.filter((c: Cocktail) => this.categoryCocktails.findIndex(x => x.id == c.id) !== -1);
-      }
-      if(this.glassCocktails.length > 0){
-        this.alcoholicCocktails = this.alcoholicCocktails.filter((c: Cocktail) => this.glassCocktails.findIndex(x => x.id == c.id) !== -1);
-      }
-      this.cocktails = this.alcoholicCocktails.filter((v, i, a) => a.indexOf(v) === i);
+      else{
+        result = this.alcoholicCocktails;
+        if(this.categoryCocktails.length > 0)
+          result = result.filter((c: Cocktail) => this.categoryCocktails.findIndex(x => x.id == c.id) !== -1);
 
-      if(this.cocktails.length > 0)
-        this.service.titleText = "Filter results";
-      else
-        this.service.titleText = "There are no results! Try other filters!";
-    }, 2000);
+        if(this.glassCocktails.length > 0)
+          result = result.filter((c: Cocktail) => this.glassCocktails.findIndex(x => x.id == c.id) !== -1);
+        }
 
+      this.cocktails = result.filter((v, i, a) => a.indexOf(v) === i);
+      this.service.titleText = this.cocktails.length > 0 ? "Filter results" : "There are no results! Try other filters!";
 
+    }, 1000);
 
-    this.filterForm.reset({alcoholic:!this.service.isAdult?"both":"nonAlcoholic"});
+    this.filterForm.reset({alcoholic : this.service.isAdult ? "both" : "nonAlcoholic"});
   }
 
   ngOnInit(): void {

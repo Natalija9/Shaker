@@ -53,13 +53,9 @@ export class SignupComponent implements OnInit,OnDestroy {
     const obs:Observable<User|null> = this.auth.registerUser(data.username,data.password,data.age);
 
     this.sub = obs.subscribe((user:User|null)=>{
-      console.log(user);
       if(user !== null){
-        if(user.age<18)
-          this.cocktailService.isAdult=true;
-        else
-          this.cocktailService.isAdult=false;
         this.cocktailService.username = user.username;
+        this.cocktailService.isAdult = user.age >= 18;
         this.cocktailService.getRatedCocktails();
       }
 

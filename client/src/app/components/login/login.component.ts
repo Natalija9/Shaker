@@ -46,12 +46,8 @@ export class LoginComponent implements OnInit {
 
     this.sub = this.auth.login(data.username, data.password).subscribe((user: User | null) => {
       if(user !== null){
-        console.log(user);
         this.cocktailService.username = user.username;
-        if(user.age < 18)
-          this.cocktailService.isAdult=true;
-        else
-          this.cocktailService.isAdult=false;
+        this.cocktailService.isAdult = user.age >= 18;
         this.cocktailService.getRatedCocktails();
         this.router.navigateByUrl('main-page');
       }
