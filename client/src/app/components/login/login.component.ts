@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
       if(user !== null){
         console.log(user);
         this.cocktailService.username = user.username;
+        this.cocktailService.getRatedCocktails();
         this.router.navigateByUrl('main-page');
       }
       else{

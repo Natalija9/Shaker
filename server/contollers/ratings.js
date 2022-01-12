@@ -1,5 +1,4 @@
 const ratingService = require('../services/ratings');
-//const validator = require('validator');
 
 const listAllRatings = async (req, res, next) => {
     try {
@@ -75,8 +74,27 @@ const addNewRating = async (req, res, next) => {
     }
   };
 
+
+  const getRatedCocktails = async (req, res, next) => {
+    const username = req.params.username;
+
+    try {
+
+      if (username === undefined) {
+        const error = new Error('Username missing');
+        error.status = 400;
+        throw error;
+      }
+      
+      const cocktails = await ratingService.getRatedCocktails(username);
+      res.status(200).json(cocktails);
+    } catch (error) {
+      next(error);
+    }
+};
   module.exports = {
       listAllRatings,
       getRating,
-      addNewRating
+      addNewRating,
+      getRatedCocktails
   };

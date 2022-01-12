@@ -52,7 +52,7 @@ export class FilterComponent implements OnInit, OnDestroy {
               private auth:AuthService) {
     this.userSub=this.auth.user.subscribe((user:User|null)=>{
       this.user=user;
-      
+
     })
     this.auth.sendUserDataIfExists();
     if(this.user !== undefined && this.user !== null){
@@ -62,7 +62,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
     this.cocktails = [];
     this.filterForm = new FormGroup({
-      alcoholic: new FormControl(!this.disabled?'both':'nonAlcoholic', []),
+      alcoholic: new FormControl(!this.disabled ? 'both' : 'nonAlcoholic', []),
       categoriesForm: new FormArray([]),
       glassesForm: new FormArray([])
     });

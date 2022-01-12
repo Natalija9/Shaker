@@ -59,6 +59,12 @@ const checkUsername = async (id, username) => {
     return cocktail;
 };
 
+const getRatedCocktails = async (username) => {
+    let cocktails = await Rating.find({users: username}).exec();
+    cocktails = cocktails.map(x => x.cocktail_id);
+    return cocktails;
+}
+
 
   
 module.exports = {
@@ -67,5 +73,6 @@ module.exports = {
     getCocktailById,
     addNewRating,
     updateRating,
-    checkUsername
+    checkUsername,
+    getRatedCocktails
 };

@@ -10,20 +10,15 @@ export class CocktailService {
 
   public searchText: string;
   result: Observable<Cocktail[]>;
-  favouriteCocktails: Cocktail[];
+  favouriteCocktails: Cocktail[] = [];
+  ratedCocktails: number[] = [11410, 12618];
 
   username: string = '';
   titleText: string = "Recommended cocktails";
 
-
   constructor(private http: HttpClient) {
     this.searchText = "mojito";
     this.result = new Observable<Cocktail[]>();
-    this.favouriteCocktails = [
-      new Cocktail(12618, 'Orangeade', '', false, '', '', '', [], []),
-      new Cocktail(11410, 'Gin Fizz', '', true, '', '', '', [], []),
-      new Cocktail(12316, 'Strawberry Daiquiri', '', true, '', '', '', [], [])
-    ];
   }
 
   getCocktails() : Observable<Cocktail[]> {
@@ -55,7 +50,8 @@ export class CocktailService {
   }
 
   addNewRating(rating: number, cocktailId: number) : Observable<number>{
-    return this.http.post<number>("http://localhost:5000/api/ratings", { "id": cocktailId, "rating" : rating, "username" : "b"}, {'headers': { 'content-type': 'application/json'}});
+    this.ratedCocktails.push(cocktailId);
+    return this.http.post<number>("http://localhost:5000/api/ratings", { "id": cocktailId, "rating" : rating, "username" : this.username}, {'headers': { 'content-type': 'application/json'}});
   }
 
   getRandomCocktail() : Observable<Cocktail[]> {
@@ -72,6 +68,10 @@ export class CocktailService {
 
   removeFromFavourites(cocktailId: number) : Observable<Cocktail[]> {
     return this.http.put<Cocktail[]>("http://localhost:5000/api/favourites/" + this.username, { "username": this.username, "cocktailId" : cocktailId}, {'headers': { 'content-type': 'application/json'}});
+  }
+
+  getRatedCocktails() : void {
+    this.http.get<number[]>("http://localhost:5000/api/ratings/rated/" + this.username).subscribe(data => this.ratedCocktails = data);
   }
 
 }

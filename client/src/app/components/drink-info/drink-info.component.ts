@@ -19,6 +19,7 @@ export class DrinkInfoComponent implements OnInit {
   rating: Observable<number>;
   rated: boolean = false;
   public static stars: number = 0;
+  proba: boolean = false;
 
   showDetails = false;
   showIngredient = false;
@@ -57,10 +58,17 @@ export class DrinkInfoComponent implements OnInit {
   onStarsClicked(): void{
     if(this.rated && DrinkInfoComponent.stars !== 0){
       this.rating = this.cocktailService.addNewRating(DrinkInfoComponent.stars, this.cocktail.id);
-      // this.rated = false;
       DrinkInfoComponent.stars = 0;
     }
 
+  }
+
+  checkRatingStatus(){
+    let  ind = this.cocktailService.ratedCocktails.findIndex(x => x == this.cocktail.id) !== -1;
+    if(ind){
+      $('.rating:hover').rating('set rating', 0).rating('disable');
+      this.proba = true;
+    }
   }
 
   onHeartClicked(): void{
