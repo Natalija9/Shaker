@@ -8,6 +8,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Cocktail } from 'src/app/models/cocktail.model';
 import { AuthService } from 'src/app/services/auth.service';
 
+
 declare const $: any;
 
 @Component({
@@ -21,29 +22,33 @@ export class MainPageComponent implements OnInit, OnDestroy {
   cocktails: Cocktail[];
 
   subs: Subscription[] = [];
-  private userSub : Subscription = new Subscription();
-  public user : User | null = null;
-
+  private  randomInteger(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
   constructor(private formBuilder: FormBuilder, public service: CocktailService,
     private auth:AuthService,
     private router:Router) {
-
-    this.userSub = this.auth.user.subscribe((user: User | null) => {
-      this.user = user;
-    });
-    this.auth.sendUserDataIfExists();
 
     this.searchForm = new FormGroup({
       search: new FormControl('', [])
     });
 
-    this.cocktails = [];
-    let x =this.service.getRandomCocktail().subscribe(cocktails => {
-      this.cocktails = cocktails;
-    })
-
-    this.subs.push(x);
-
+      if(this.service.isAdult){
+        this.cocktails = [];
+        let x =this.service.getNonAlcoholicCoctails().subscribe(cocktails => {
+        this.cocktails.push(cocktails[this.randomInteger(0,cocktails.length)]);
+        this.cocktails.push(cocktails[this.randomInteger(0,cocktails.length)]);
+        this.cocktails.push(cocktails[this.randomInteger(0,cocktails.length)]);
+      })
+        this.subs.push(x);
+      }
+      else{
+        this.cocktails = [];
+        let x =this.service.getRandomCocktail().subscribe(cocktails => {
+        this.cocktails = cocktails;
+      })
+        this.subs.push(x);
+    }
   }
 
   onSubmit(event: any){
@@ -92,8 +97,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if(this.userSub)
-      this.userSub.unsubscribe();
     this.subs.forEach(subscription => subscription.unsubscribe())
   }
 }

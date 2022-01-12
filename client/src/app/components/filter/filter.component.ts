@@ -91,6 +91,22 @@ export class FilterComponent implements OnInit, OnDestroy {
       this.subs.push(x);
 
     }
+    else{
+      let x = this.service.filterByAlcoholic("Alcoholic").subscribe(cocktails => {
+        this.alcoholicCocktails = cocktails;
+        })
+      this.subs.push(x);
+
+      x = this.service.filterByAlcoholic("Non alcoholic").subscribe(cocktails => {
+        this.alcoholicCocktails = this.alcoholicCocktails.concat(cocktails);
+        })
+      this.subs.push(x);
+
+      x = this.service.filterByAlcoholic("Optional alcohol").subscribe(cocktails => {
+        this.alcoholicCocktails = this.alcoholicCocktails.concat(cocktails);
+        })
+      this.subs.push(x);
+    }
 
     for(let i = 0; i < this.categories.length; i++){
       if(selectedCategories[i]){

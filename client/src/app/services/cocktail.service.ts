@@ -16,7 +16,7 @@ export class CocktailService {
   isAdult: boolean = false;
   username: string = '';
   titleText: string = "Recommended cocktails";
-
+  //nonAlcoholicList: Observable<Cocktail[]>;
   constructor(private http: HttpClient) {
     this.searchText = "mojito";
     this.result = new Observable<Cocktail[]>();
@@ -24,6 +24,11 @@ export class CocktailService {
 
   getCocktails() : Observable<Cocktail[]> {
     return this.result = this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/search/" + this.searchText);
+  }
+
+  getNonAlcoholicCoctails():Observable<Cocktail[]>{
+    return this.result = this.http.get<Cocktail[]>("http://localhost:5000/api/cocktails/alcohol/Non alcoholic");
+
   }
 
   getRating(cocktailId: number) : Observable<number>{
