@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CocktailService } from 'src/app/services/cocktail.service';
 import { Component, OnInit } from '@angular/core';
 import { Globals } from '../../common/globals';
@@ -17,7 +18,10 @@ export class LoginComponent implements OnInit {
   user: User;
 
 
-  constructor(private formBuilder: FormBuilder, private auth:AuthService, private cocktailService: CocktailService) {
+  constructor(private formBuilder: FormBuilder, private auth:AuthService,
+    private cocktailService: CocktailService,
+    private router:Router) {
+
     this.user = new User('peraperic', 'pera123', 22);
 
     this.loginForm = new FormGroup({
@@ -31,8 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSignUp() {
-    Globals.shouldDisplaySignUp = true;
-    Globals.shouldDisplayLogin = false;
+    this.router.navigateByUrl('register');
   }
 
   onLogin(): void {
@@ -45,10 +48,7 @@ export class LoginComponent implements OnInit {
       if(user !== null){
         console.log(user);
         this.cocktailService.username = user.username;
-
-        Globals.shouldDisplayMainPage = true;
-        Globals.shouldDisplayLogin = false;
-        Globals.shouldDisplaySignUp = false;
+        this.router.navigateByUrl('main-page');
       }
       else{
         this.loginForm.reset();

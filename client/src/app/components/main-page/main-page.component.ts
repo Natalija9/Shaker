@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { User } from './../../models/user.model';
 import { Subscription, Observable } from 'rxjs';
 import { Globals } from './../../common/globals';
@@ -20,9 +21,18 @@ export class MainPageComponent implements OnInit, OnDestroy {
   cocktails: Cocktail[];
 
   subs: Subscription[] = [];
+  private userSub : Subscription = new Subscription();
+  public user : User | null = null;
 
   constructor(private formBuilder: FormBuilder, public service: CocktailService,
-    private auth:AuthService) {
+    private auth:AuthService,
+    private router:Router) {
+
+    this.userSub = this.auth.user.subscribe((user: User | null) => {
+      this.user = user;
+    });
+    this.auth.sendUserDataIfExists();
+
     this.searchForm = new FormGroup({
       search: new FormControl('', [])
     });
@@ -65,9 +75,8 @@ export class MainPageComponent implements OnInit, OnDestroy {
   logOut(): void {
 
     this.auth.logout();
+    this.router.navigateByUrl('');
 
-    Globals.shouldDisplayLogin = true;
-    Globals.shouldDisplayMainPage = false;
   }
 
   ngOnInit(): void {
@@ -83,6 +92,8 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if(this.userSub)
+      this.userSub.unsubscribe();
     this.subs.forEach(subscription => subscription.unsubscribe())
   }
 }

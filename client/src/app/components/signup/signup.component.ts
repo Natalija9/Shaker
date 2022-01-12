@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { Globals } from './../../common/globals';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -18,7 +19,8 @@ export class SignupComponent implements OnInit,OnDestroy {
 
 
   constructor(private formBuilder: FormBuilder,
-             private auth:AuthService) {
+             private auth:AuthService,
+             private router: Router) {
     //this.user = new User('peraperic', 'pera123', 22);
 
     this.signUpForm = new FormGroup({
@@ -38,8 +40,7 @@ export class SignupComponent implements OnInit,OnDestroy {
   }
 
   onLogin() {
-    Globals.shouldDisplaySignUp = false;
-    Globals.shouldDisplayLogin = true;
+    this.router.navigateByUrl('');
   }
 
   onSignUp() {
@@ -85,14 +86,12 @@ export class SignupComponent implements OnInit,OnDestroy {
       return;
     }
 
-    Globals.shouldDisplayMainPage = true;
-    Globals.shouldDisplayLogin = false;
-    Globals.shouldDisplaySignUp = false;
-
     const obs:Observable<User|null> = this.auth.registerUser(data.username,data.password,data.age);
-    
+
     this.sub=obs.subscribe((user:User|null)=>{
       console.log(user);
+      this.router.navigateByUrl('main-page');
+
     });
   }
 

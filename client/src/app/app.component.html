@@ -1,8 +1,10 @@
 <body>
-
-  <app-login *ngIf="shouldDisplayLogin();"></app-login>
-  <app-signup *ngIf="shouldDisplaySignUp();"></app-signup>
-
-  <app-main-page *ngIf="shouldDisplayMainPage();"></app-main-page>
-
+  <router-outlet routerLink=""></router-outlet>
 </body>
+
+<!--
+<app-login *ngIf="shouldDisplayLogin();"></app-login>
+<app-signup *ngIf="shouldDisplaySignUp();"></app-signup>
+
+<app-main-page *ngIf="shouldDisplayMainPage();"></app-main-page>
+-->

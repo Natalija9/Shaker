@@ -69,6 +69,7 @@ export class AuthService {
   public logout() {
     this.jwt.removeToken();
     this.userSubject.next(null);
+    this.userLoggedIn = false;
   }
 
   private handleError(error: HttpErrorResponse): Observable<{ token: string }> {
