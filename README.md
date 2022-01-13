@@ -1,8 +1,12 @@
-# <img src="/src/assets/images/Shaker-logos.jpeg" width="180"/> Project Shaker
+
+
+# <img src="client/src/assets/images/Shaker-logos.jpeg" width="150"/>           Project Shaker   
+
 
 # Opis :memo: :
 
 Web aplikacija koja nudi veliki broj recepata za koktele. Moguce pretrazivati recepte po nazivu koktela ili po sastojcima i filtrirati rezultate prema nekoliko kategorija. Korisnik moze da se registruje, pretrazuje i ocenjuje koktele i pravi svoju listu omiljenih recepata.
+
 
 # Koriscene tehnologije :books: :
 
@@ -18,7 +22,32 @@ Web aplikacija koja nudi veliki broj recepata za koktele. Moguce pretrazivati re
 Node se moze preuzeti na [ovom](https://nodejs.org/en/download/) linku.
 MongoDB se moze preuzeti na [ovom](https://www.mongodb.com/try/download/community) linku.
 
+
 # Preuzimanje i pokretanje :wrench: :
+
+
+Aplikacija se moze pokrenuti koriscenjem skripta:
+
+1. U terminalu se pozicionirati u zeljeni direktorijum
+2. Klonirati repozitorijum komandom: `$ git clone https://gitlab.com/matfpveb/projekti/2021-2022/05-Shaker
+3. Pozicionirati se u `server` folder i pokrenuti komandu:
+``` 
+./serverstart.sh
+```
+4. Pozicionirati se u `client` folder i pokrenuti komandu:
+``` 
+./clientstart.sh
+```
+
+Aplikacija je pokrenuta na adresi http://localhost:4200/. 
+
+
+
+___
+
+
+
+Pokretanje aplikacije bez koriscenja skripta:
 
 1. U terminalu se pozicionirati u zeljeni direktorijum
 2. Klonirati repozitorijum komandom: `$ git clone https://gitlab.com/matfpveb/projekti/2021-2022/05-Shaker
@@ -49,24 +78,8 @@ ng serve
 9. U pretrazivacu otvoriti adresu http://localhost:4200/
 
 
-___
 
-Aplikacija se moze pokrenuti i koriscenjem skripta.
-
-1. U terminalu se pozicionirati u zeljeni direktorijum
-2. Klonirati repozitorijum komandom: `$ git clone https://gitlab.com/matfpveb/projekti/2021-2022/05-Shaker
-3. Pozicionirati se u `server` folder i pokrenuti komandu:
-``` 
-./serverstart.sh
-```
-4. Pozicionirati se u `client` folder i pokrenuti komandu:
-``` 
-./clientstart.sh
-```
-
-Aplikacija je pokrenuta na adresi http://localhost:4200/. 
-
-## Schema baze podataka 
+# Schema baze podataka 
 <table>
 <tr>
 <th>Users</th>
@@ -103,7 +116,7 @@ Aplikacija je pokrenuta na adresi http://localhost:4200/.
 </tr>
 </table>
 
-
+___
 
 
 Podatke o koktelima dobijamo koriscenjem [API-ja](https://www.thecocktaildb.com/api.php).
@@ -115,8 +128,9 @@ Podatke o koktelima dobijamo koriscenjem [API-ja](https://www.thecocktaildb.com/
 </tr>
 <tr>
 <td>
+
  Polje             | Tip       | Opis                               |
- ----------------- | ----------|------------------------------------|
+ ------------------| ----------|------------------------------------|
  id                | Number    |                                    |
  name              | String    | naziv koktela                      |
  category          | String    | kategorija kojoj koktel pripada    |
@@ -135,7 +149,9 @@ Podatke o koktelima dobijamo koriscenjem [API-ja](https://www.thecocktaildb.com/
 
 # Demo snimak aplikacije :movie_camera: :
 
-## Developers
+___
+
+# Developers
 
 - [Lucija Milicic, 29/2018](https://gitlab.com/lucijamilicic)
 - [Natalija Asanovic, 171/2018](https://gitlab.com/Natalija9)
