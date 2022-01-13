@@ -57,68 +57,6 @@ const addNewUser = async (req, res, next) => {
     next(error);
   }
 };
-/*
-const changeUserPassword = async (req, res, next) => {
-  const { username, oldPassword, newPassword } = req.body;
-
-  try {
-    if (!username || !oldPassword || !newPassword) {
-      const error = new Error('Invalid input');
-      error.status = 400;
-      throw error;
-    }
-
-    const user = await usersService.getUserByUsername(username);
-
-    if (!user) {
-      const error = new Error('Invalid username or password');
-      error.status = 404;
-      throw error;
-    }
-
-    const updatedUser = await usersService.changeUserPassword(
-      username,
-      newPassword
-    );
-
-    if (updatedUser) {
-      res.status(200).json(updatedUser);
-    } else {
-      const error = new Error('Invalid username or password');
-      error.status = 403;
-      throw error;
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-*/
-/*
-const deleteUser = async (req, res, next) => {
-  const username = req.params.username;
-
-  try {
-    if (!username) {
-      const error = new Error('Username missing');
-      error.status = 400;
-      throw error;
-    }
-
-    const user = await usersService.getUserByUsername(username);
-    if (!user) {
-      const error = new Error('Invalid username');
-      error.status = 404;
-      throw error;
-    }
-
-    await usersService.deleteUser(username);
-    res.status(200).json();
-  } catch (error) {
-    next(error);
-  }
-};
-*/
-
 
 const loginUser = async(req, res, next) => {
   const username = req.username;
@@ -137,7 +75,5 @@ module.exports = {
   getUserByUsername,
   getAllUsers,
   addNewUser,
-  loginUser,
-  //changeUserPassword,
-  //deleteUser
+  loginUser
 };

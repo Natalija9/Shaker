@@ -9,20 +9,7 @@ export class Cocktail {
       public image: string,
       public ingredients: string[],
       public measures: string[]
-      //public rating: number
   ) {}
 
 }
 
-
-// let newDrink = {
-//   "id" : drink["idDrink"],
-//   "name" : drink["strDrink"],
-//   "category" : drink["strCategory"],
-//   "alcoholic" : drink["strAlcoholic"] == 'Alcoholic' ? true : false,
-//   "glass" : drink["strGlass"],
-//   "instructions" : drink["strInstructions"],
-//   "image" : drink["strDrinkThumb"],
-//   "ingredients" :  Object.fromEntries(ingredients)
-
-// }

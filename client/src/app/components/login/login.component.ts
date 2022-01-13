@@ -1,11 +1,10 @@
 import { Router } from '@angular/router';
 import { CocktailService } from 'src/app/services/cocktail.service';
 import { Component, OnInit } from '@angular/core';
-import { Globals } from '../../common/globals';
 import { User } from 'src/app/models/user.model'
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',

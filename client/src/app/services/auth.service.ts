@@ -76,7 +76,6 @@ export class AuthService {
     const serverError: { message: string; status: number; stack: string } = error.error;
     window.alert('Unknown user or password incorrect.');
     this.jwt.removeToken();
-    // window.alert(`There was an error: ${serverError.message}. Server returned code: ${serverError.status}`);
     return of({ token: this.jwt.getToken() });
   }
 

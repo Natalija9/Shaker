@@ -29,7 +29,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
         search: new FormControl('', [])
       });
 
-      this.service.titleText = "Recomended cocktails";
+      this.service.titleText = "Recommended cocktails";
       if(!this.service.isAdult){
         this.cocktails = [];
 

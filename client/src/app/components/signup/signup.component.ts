@@ -22,7 +22,6 @@ export class SignupComponent implements OnInit,OnDestroy {
             private cocktailService: CocktailService,
             private auth:AuthService,
             private router: Router) {
-    //this.user = new User('peraperic', 'pera123', 22);
 
     this.signUpForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.pattern(new RegExp("[a-zA-Z]{1,}[a-zA-Z0-9_-]{4,}"))]),

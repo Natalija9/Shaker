@@ -63,9 +63,6 @@ const addToFavourites = async (username, id) => {
 
   return newFave;
 };
-  
-
-
 
 module.exports = {
   getAllUsers,

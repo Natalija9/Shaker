@@ -84,15 +84,9 @@ export class DrinkInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    $('.ui.icon.button')
-    .popup({
-      popup : $('.custom.popup'),
-      on    : 'click'
-    });
 
     this.rating = this.cocktailService.getRating(this.cocktail.id);
     this.inFavourites = this.cocktailService.favouriteCocktails.findIndex(x => x.id == this.cocktail.id) !== -1;
-
 
     $('.ui.star.rating')
     .rating({
@@ -107,15 +101,3 @@ export class DrinkInfoComponent implements OnInit {
 
   }
 }
-
-// constructor(
-//   public id: number,
-//   public name: string,
-//   public category: string,
-//   public alcoholic: boolean,
-//   public glass: string,
-//   public instructions: string,
-//   public image: string,
-//   public ingredients: string[],
-//   public measures: string[]
-// ) {}
