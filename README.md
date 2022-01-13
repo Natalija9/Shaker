@@ -1,6 +1,5 @@
 
-
-# <img src="client/src/assets/images/Shaker-logos.jpeg" width="150"/>           Project Shaker   
+# <img src="client/src/assets/images/Shaker-logos1.png" width="170"/>           Project Shaker   
 
 
 # Opis :memo: :
@@ -39,7 +38,7 @@ Aplikacija se moze pokrenuti koriscenjem skripta:
 ./clientstart.sh
 ```
 
-Aplikacija je pokrenuta na adresi http://localhost:4200/. 
+Aplikacija je pokrenuta na adresi http://localhost:4200/ 
 
 
 
