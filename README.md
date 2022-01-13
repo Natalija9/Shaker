@@ -1,17 +1,16 @@
+# <img src="/src/assets/images/Shaker-logos.jpeg" width="180"/> Project Shaker
 
-# Project Shaker
+# Opis :memo: :
 
-# Koriscene tehnologije 
+Web aplikacija koja nudi veliki broj recepata za koktele. Moguce pretrazivati recepte po nazivu koktela ili po sastojcima i filtrirati rezultate prema nekoliko kategorija. Korisnik moze da se registruje, pretrazuje i ocenjuje koktele i pravi svoju listu omiljenih recepata.
+
+# Koriscene tehnologije :books: :
 
 ![](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 ![](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 ![](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![](https://img.shields.io/badge/Semantic_UI-563D7C?style=for-the-badge&logo=semanticui&logoColor=white)
 
-
-# Opis :memo: :
-
-Web aplikacija koja nudi veliki broj recepata za koktele. Moguce pretrazivati recepte po nazivu koktela ili po sastojcima i filtrirati rezultate prema nekoliko kategorija. Korisnik moze da se registruje, pretrazuje i ocenjuje koktele i pravi svoju listu omiljenih recepata.
 
 
 # Instalacija :hammer: :
@@ -90,8 +89,8 @@ Aplikacija je pokrenuta na adresi http://localhost:4200/.
  ------------------| ---------|--------------------------------------|
  _id               | ObjectId |                                      |
  cocktail_id       | Number   |                                      |
- number_of_ratings | Number   |       broj datih ocena koktela       |
- sum_of_ratings    | Number   |    suma svih ocena koktela           |
+ number_of_ratings | Number   |  broj datih ocena koktela            |
+ sum_of_ratings    | Number   |  suma svih ocena koktela             |
  users             | [String] |lista korisnika koji su ocenili koktel|
 </td>
 <td>
@@ -103,6 +102,34 @@ Aplikacija je pokrenuta na adresi http://localhost:4200/.
 </td>
 </tr>
 </table>
+
+
+
+
+Podatke o koktelima dobijamo koriscenjem [API-ja](https://www.thecocktaildb.com/api.php).
+
+
+<table>
+<tr>
+<th>Cocktails</th>
+</tr>
+<tr>
+<td>
+ Polje             | Tip       | Opis                               |
+ ----------------- | ----------|------------------------------------|
+ id                | Number    |                                    |
+ name              | String    | naziv koktela                      |
+ category          | String    | kategorija kojoj koktel pripada    |
+ alcoholic         | String    | alkoholan/bezalkoholan koktel      |
+ glass             | String    | casa za serviranje koktela         |
+ instructions      | String    | instrukcije za pravljenje koktela  |
+ image             | String    | slika koktela                      |
+ ingredients       | [String]  | sastojci koktela                   |
+ measures          | [String]  | mere sastojaka koktela             |
+</td>
+</tr>
+</table>
+
 
 
 
