@@ -36,8 +36,10 @@ const searchCocktails = async (req,res,next) => {
     
     axios.all([req1, req2]).then(axios.spread(function(response1, response2){
         
-        let data = response1.data["drinks"].concat(response2.data["drinks"]);
-        data = formatDrinks(data);
+        let data1 = response1.data["drinks"] !== null ? response1.data["drinks"] : [];
+        let data2 = response2.data["drinks"] !== null ? response2.data["drinks"] : []; 
+
+        data = formatDrinks(data1.concat(data2));
         
         res.status(200).json(data);
     })).catch(function(error){
@@ -237,42 +239,43 @@ const formatDrinks = (drinks) => {
     if(drinks === null | drinks === undefined)
         return [];
 
-        for(drink of drinks){
-    
-            if(newData.findIndex(x => x["id"] == drink["idDrink"]) !== -1)
-                continue;
+    for(drink of drinks){
 
-            let ingredients = [];
-            let measures = [];
-    
-            for(let i = 1; i < 16; i++){
-                
-                let current = drink["strIngredient" + i];
-                if(current !== null && current !== undefined && current !== ""){
-                    ingredients.push(current);
-                    let measure = drink["strMeasure" + i];
-                    if(measure !== null && measure !== undefined)
-                        measures.push(measure);
-                    else 
-                        measures.push("");
-                }
-            }
-    
-    
-            let newDrink = {
-                "id" : drink["idDrink"],
-                "name" : drink["strDrink"],
-                "category" : drink["strCategory"],
-                "alcoholic" : drink["strAlcoholic"] == 'Alcoholic' ? true : false,
-                "glass" : drink["strGlass"],
-                "instructions" : drink["strInstructions"],
-                "image": drink["strDrinkThumb"],
-                "ingredients" : ingredients,
-                "measures" : measures
-    
-            }
+        if(drink === undefined || newData.findIndex(x => x["id"] == drink["idDrink"]) !== -1)
+            continue;
 
-        newData.push(newDrink);
+        let ingredients = [];
+        let measures = [];
+
+        for(let i = 1; i < 16; i++){
+            
+            let current = drink["strIngredient" + i];
+            if(current !== null && current !== undefined && current !== ""){
+                ingredients.push(current);
+                let measure = drink["strMeasure" + i];
+                if(measure !== null && measure !== undefined)
+                    measures.push(measure);
+                else 
+                    measures.push("");
+            }
+        }
+
+
+        let newDrink = {
+            "id" : drink["idDrink"],
+            "name" : drink["strDrink"],
+            "category" : drink["strCategory"],
+            "alcoholic" : drink["strAlcoholic"] == 'Alcoholic' ? true : false,
+            "glass" : drink["strGlass"],
+            "instructions" : drink["strInstructions"],
+            "image": drink["strDrinkThumb"],
+            "ingredients" : ingredients,
+            "measures" : measures
+
+        }
+
+    newData.push(newDrink);
+
     }
 
     return newData;

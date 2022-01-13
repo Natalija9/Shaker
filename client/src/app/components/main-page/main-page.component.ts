@@ -53,7 +53,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
     onSubmit(event: any){
       if(event.keyCode == 13) {
         const data = this.searchForm.value;
-
         this.service.searchText = data.search;
 
         let x = this.service.getCocktails().subscribe(cocktails => {
@@ -61,8 +60,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
           this.cocktails = [];
           this.service.titleText = '';
           if(!this.service.isAdult){
-            cocktails = cocktails.filter((c: Cocktail) => this.service.nonAlcoholicList.findIndex(x => x.id == c.id) !== -1)
-                                  .filter((v, i, a) => a.indexOf(v) === i);
+            cocktails = cocktails.filter((c: Cocktail) => this.service.nonAlcoholicList.findIndex(x => x.id == c.id) !== -1);
           }
           this.cocktails = cocktails;
           this.service.titleText = this.cocktails.length > 0 ?  "Search results" : "There are no results! You can search something else!";

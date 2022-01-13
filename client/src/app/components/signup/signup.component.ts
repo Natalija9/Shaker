@@ -48,9 +48,12 @@ export class SignupComponent implements OnInit,OnDestroy {
 
     const data = this.signUpForm.value;
 
-    this.formValidation();
+    if(!this.formValidation()){
+      this.signUpForm.reset();
+      return;
+    }
 
-    const obs:Observable<User|null> = this.auth.registerUser(data.username,data.password,data.age);
+    const obs:Observable<User|null> = this.auth.registerUser(data.username, data.password, data.age);
 
     this.sub = obs.subscribe((user:User|null)=>{
       if(user !== null){
@@ -64,46 +67,48 @@ export class SignupComponent implements OnInit,OnDestroy {
     });
   }
 
-  private formValidation(){
+  private formValidation() : boolean {
 
     const data = this.signUpForm.value;
 
     const usernameErrors: ValidationErrors | null | undefined = this.signUpForm.get('username')?.errors;
     if(usernameErrors !== null ){
       window.alert('Invalid username');
-      return;
+      return false;
     }
 
     const passwordErrors: ValidationErrors | null | undefined = this.signUpForm.get('password')?.errors;
 
     if( passwordErrors !== null ){
       window.alert('Password should contain at least 5 characters');
-      return;
+      return false;
     }
 
     const confirmErrors: ValidationErrors | null | undefined = this.signUpForm.get('confirmPassword')?.errors;
 
     if( confirmErrors !== null ){
       window.alert('Confirm password');
-      return;
+      return false;
     }
 
     if(data.password !== data.confirmPassword){
       window.alert('Password and confirmed password do not match');
-      return;
+      return false;
     }
 
     const ageErrors: ValidationErrors | null | undefined = this.signUpForm.get('age')?.errors;
     console.log(data.age)
     if( ageErrors !== null ){
       window.alert('Invalid age');
-      return;
+      return false;
     }
 
     if(this.signUpForm.invalid){
       window.alert('Invalid input');
-      return;
+      return false;
     }
+
+    return true;
   }
 
 }

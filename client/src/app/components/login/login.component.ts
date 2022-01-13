@@ -42,7 +42,10 @@ export class LoginComponent implements OnInit {
 
     const data = this.loginForm.value;
 
-    this.formValidation();
+    if(!this.formValidation()){
+      this.loginForm.reset();
+      return;
+    }
 
     this.sub = this.auth.login(data.username, data.password).subscribe((user: User | null) => {
       if(user !== null){
@@ -58,25 +61,27 @@ export class LoginComponent implements OnInit {
 
   }
 
-  private formValidation(){
+  private formValidation() : boolean {
 
     const usernameErrors: ValidationErrors | null | undefined = this.loginForm.get('username')?.errors;
     if(usernameErrors !== null ){
       window.alert('Invalid username');
-      return;
+      return false;
     }
 
     const passwordErrors: ValidationErrors | null | undefined = this.loginForm.get('password')?.errors;
     if( passwordErrors !== null ){
       window.alert('Invalid password');
-      return;
+      return false;
     }
 
 
     if(this.loginForm.invalid){
       window.alert('Invalid input');
-      return;
+      return false;
     }
+
+    return true;
 
   }
 
