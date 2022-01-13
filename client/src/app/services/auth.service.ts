@@ -74,7 +74,8 @@ export class AuthService {
 
   private handleError(error: HttpErrorResponse): Observable<{ token: string }> {
     const serverError: { message: string; status: number; stack: string } = error.error;
-    window.alert('Error');
+    window.alert('Unknown user or password incorrect.');
+    this.jwt.removeToken();
     // window.alert(`There was an error: ${serverError.message}. Server returned code: ${serverError.status}`);
     return of({ token: this.jwt.getToken() });
   }
