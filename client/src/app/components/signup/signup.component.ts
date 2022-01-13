@@ -73,7 +73,7 @@ export class SignupComponent implements OnInit,OnDestroy {
 
     const usernameErrors: ValidationErrors | null | undefined = this.signUpForm.get('username')?.errors;
     if(usernameErrors !== null ){
-      window.alert('Invalid username');
+      window.alert('Username should contain at least 5 characters');
       return false;
     }
 

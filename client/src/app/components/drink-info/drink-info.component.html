@@ -9,7 +9,7 @@
       <div class="meta">
         <div class="ui star rating" (mouseenter)="checkRatingStatus()" (click)="rated = true" (mouseleave)="onStarsClicked()"></div>
         <span class="price">{{ rating | async }} / 5</span>
-        <span class="price">{{this.proba ? "Already rated" : ""}}</span>
+        <p class="price">{{this.alreadyRated ? "Already rated" : ""}}</p>
       </div>
 
       <div *ngIf="showDetails">

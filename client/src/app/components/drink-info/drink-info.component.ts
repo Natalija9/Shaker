@@ -19,7 +19,7 @@ export class DrinkInfoComponent implements OnInit {
   rating: Observable<number>;
   rated: boolean = false;
   public static stars: number = 0;
-  proba: boolean = false;
+  alreadyRated: boolean = false;
 
   showDetails = false;
   showIngredient = false;
@@ -67,7 +67,7 @@ export class DrinkInfoComponent implements OnInit {
     let  ind = this.cocktailService.ratedCocktails.findIndex(x => x == this.cocktail.id) !== -1;
     if(ind){
       $('.rating:hover').rating('set rating', 0).rating('disable');
-      this.proba = true;
+      this.alreadyRated = true;
     }
   }
 
