@@ -148,6 +148,8 @@ Podatke o koktelima dobijamo koriscenjem [API-ja](https://www.thecocktaildb.com/
 
 # Demo snimak aplikacije :movie_camera: :
 
+Demo snimak aplikacije mozete pogledati na [ovom](https://youtu.be/AU9Mg5nLoMA) linku.
+
 ___
 
 # Developers
